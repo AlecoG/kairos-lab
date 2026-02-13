@@ -7,13 +7,12 @@
   <meta name="description" content="Kairos Lab Barbería: cortes, barba, cejas, lavado y tratamientos capilares. Agenda tu cita por WhatsApp." />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-page="home">
   <!-- Header -->
   <header class="header" id="top">
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="Ir al inicio">
-        <span class="brand__mark">K</span>
-        <span class="brand__name">Kairos Lab</span>
+        <img class="brand__logo" src="assets/branding/logo.jpg" alt="Kairos Lab" />
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -55,7 +54,7 @@
           <div class="hero__meta">
             <div class="meta__item">
               <span class="meta__label">Horario</span>
-              <span class="meta__value">Lun–Sáb · 10:00–20:00</span>
+              <span class="meta__value">Lun–Dom · 10:00–22:00</span>
             </div>
             <div class="meta__item">
               <span class="meta__label">Atención</span>
@@ -135,6 +134,7 @@
           </div>
           <div class="toolbar__right">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
+            <a class="btn btn--primary" href="catalogo.html">Ver todos los productos</a>
           </div>
         </div>
 
@@ -149,24 +149,30 @@
       <div class="container">
         <div class="section__head">
           <h2>Ubicación</h2>
-          <p>Agrega tu dirección exacta o un mapa cuando lo tengas.</p>
+          <p>Estamos en Vedado, La Habana. Puedes abrir la ruta o ver el mapa aquí mismo.</p>
         </div>
 
         <div class="split">
           <div class="panel">
             <h3>Dirección</h3>
             <p class="muted">
-              Calle/Av · Colonia · Ciudad<br />
-              Referencia: frente a ___
+              Calle 21 / 8 y 10<br />
+              Vedado, Havana, Cuba
             </p>
             <div class="panel__actions">
-              <a class="btn btn--ghost" href="#contacto">Ver contacto</a>
+              <a class="btn btn--ghost" href="https://maps.google.com/?q=Calle+21+%2F+8+y+10%2C+Vedado%2C+Havana%2C+Cuba" target="_blank" rel="noopener">Abrir en Google Maps</a>
               <a class="btn btn--primary" id="btnCitaUbicacion" href="#" target="_blank" rel="noopener">Agendar cita</a>
             </div>
           </div>
 
-          <div class="map placeholder">
-            <p class="muted">Aquí puedes incrustar un mapa (Google Maps iframe) cuando tengas el link.</p>
+          <div class="map">
+            <iframe
+              title="Mapa de Kairos Lab"
+              src="https://maps.google.com/maps?q=Calle%2021%20%2F%208%20y%2010%2C%20Vedado%2C%20Havana%2C%20Cuba&z=16&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
@@ -190,16 +196,16 @@
           <h3>Contacto</h3>
           <ul class="list">
             <li><span class="muted">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
-            <li><span class="muted">Tel:</span> <a href="tel:+0000000000">+00 0000 0000</a></li>
+            <li><span class="muted">Tel:</span> <a href="tel:+53 00000000">+53 0000 0000</a></li>
             <li><span class="muted">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
+            <li><span class="muted">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
           </ul>
         </div>
 
         <div>
           <h3>Horarios</h3>
           <ul class="list">
-            <li><span class="muted">Lunes a sábado:</span> 10:00–20:00</li>
-            <li><span class="muted">Domingo:</span> Cerrado</li>
+            <li><span class="muted">Lunes a domingo:</span> 10:00–22:00</li>
           </ul>
         </div>
       </div>
@@ -216,6 +222,7 @@
     WhatsApp · Agendar
   </a>
 
+  <script src="products-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

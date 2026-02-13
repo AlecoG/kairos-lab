@@ -12,14 +12,17 @@ const services = [
   { name: "Tratamientos capilares", desc: "Hidratación, reparación o control de frizz según tu necesidad.", minutes: 40, price: "$$$$" },
 ];
 
-const products = [
-  { name: "Cera Mate", category: "Styling", desc: "Fijación media/alta con acabado natural.", price: "$$$" },
-  { name: "Pomada Brillante", category: "Styling", desc: "Look clásico, brillo controlado y peinado firme.", price: "$$$" },
-  { name: "Shampoo Anticaspa", category: "Cuidado", desc: "Limpieza profunda y control de descamación.", price: "$$$" },
-  { name: "Acondicionador Hidratante", category: "Cuidado", desc: "Suavidad y manejo para cabello seco.", price: "$$$" },
-  { name: "Aceite para Barba", category: "Barba", desc: "Suaviza, perfuma y ayuda a controlar el frizz.", price: "$$$" },
-  { name: "Bálsamo para Barba", category: "Barba", desc: "Nutre y aporta forma ligera para el día a día.", price: "$$$" },
-];
+const products = window.KAIROS_PRODUCTS || [];
+const isCatalogPage = document.body?.dataset?.page === "catalogo";
+const visibleProducts = isCatalogPage ? products : products.slice(0, 3);
+
+function getCategoryFallback(category) {
+  const key = (category || "").toLowerCase();
+  if (key === "barba") return "assets/products/barba.svg";
+  if (key === "cuidado") return "assets/products/cuidado.svg";
+  if (key === "post afeitado") return "assets/products/post-afeitado.svg";
+  return "assets/products/styling.svg";
+}
 
 function buildWhatsAppLink(message) {
   if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
@@ -73,17 +76,59 @@ function renderProducts(list) {
 
   grid.innerHTML = list.map((p) => `
     <article class="item">
-      <div class="item__top">
-        <h3 class="item__title">${p.name}</h3>
-        <span class="item__pill">${p.category}</span>
+      <div class="item__media">
+        <img
+          class="item__image"
+          src="${p.image || getCategoryFallback(p.category)}"
+          data-fallback="${getCategoryFallback(p.category)}"
+          alt="${p.name}"
+          loading="lazy"
+        />
       </div>
-      <p class="item__desc">${p.desc}</p>
-      <div class="item__actions">
-        <span class="price">${p.price}</span>
-        <button class="btn btn--ghost" data-product="${p.name}">Preguntar por este producto</button>
+      <div class="item__body">
+        <div class="item__top">
+          <h3 class="item__title">${p.name}</h3>
+          <span class="item__pill">${p.category}</span>
+        </div>
+        <p class="item__desc">${p.desc}</p>
+        <div class="item__actions">
+          <span class="price">${p.price}</span>
+          <button class="btn btn--ghost" data-product="${p.name}">Preguntar por este producto</button>
+        </div>
       </div>
     </article>
   `).join("");
+
+  grid.querySelectorAll(".item__image").forEach((img) => {
+    img.addEventListener("error", () => {
+      const fallback = img.dataset.fallback;
+      if (fallback && img.getAttribute("src") !== fallback) {
+        img.setAttribute("src", fallback);
+      }
+    }, { once: true });
+  });
+}
+
+function initSearch() {
+  const input = document.getElementById("productSearch");
+  const clearBtn = document.getElementById("clearFilters");
+  const grid = document.getElementById("productsGrid");
+
+  if (!input || !clearBtn || !grid) return;
+
+  const apply = () => {
+    const q = input.value.trim().toLowerCase();
+    const filtered = visibleProducts.filter(p =>
+      `${p.name} ${p.category} ${p.desc}`.toLowerCase().includes(q)
+    );
+    renderProducts(filtered);
+  };
+
+  input.addEventListener("input", apply);
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    renderProducts(visibleProducts);
+  });
 
   grid.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-product]");
@@ -93,29 +138,8 @@ function renderProducts(list) {
     const msg = `Hola, quiero información del producto "${productName}" (Kairos Lab). ¿Precio y disponibilidad?`;
     window.open(buildWhatsAppLink(msg), "_blank", "noopener");
   });
-}
 
-function initSearch() {
-  const input = document.getElementById("productSearch");
-  const clearBtn = document.getElementById("clearFilters");
-
-  if (!input || !clearBtn) return;
-
-  const apply = () => {
-    const q = input.value.trim().toLowerCase();
-    const filtered = products.filter(p =>
-      `${p.name} ${p.category} ${p.desc}`.toLowerCase().includes(q)
-    );
-    renderProducts(filtered);
-  };
-
-  input.addEventListener("input", apply);
-  clearBtn.addEventListener("click", () => {
-    input.value = "";
-    renderProducts(products);
-  });
-
-  renderProducts(products);
+  renderProducts(visibleProducts);
 }
 
 function initMobileNav() {
