@@ -7,13 +7,12 @@
   <meta name="description" content="Kairos Lab Barbería: cortes, barba, cejas, lavado y tratamientos capilares. Agenda tu cita por WhatsApp." />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-page="home">
   <!-- Header -->
   <header class="header" id="top">
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="Ir al inicio">
-        <span class="brand__mark">K</span>
-        <span class="brand__name">Kairos Lab</span>
+        <img class="brand__logo" src="assets/branding/logo.jpg" alt="Kairos Lab" />
       </a>
 
       <nav class="nav" aria-label="Navegación principal">
@@ -135,6 +134,7 @@
           </div>
           <div class="toolbar__right">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
+            <a class="btn btn--primary" href="catalogo.html">Ver todos los productos</a>
           </div>
         </div>
 
@@ -196,7 +196,7 @@
           <h3>Contacto</h3>
           <ul class="list">
             <li><span class="muted">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
-            <li><span class="muted">Tel:</span> <a href="tel:+0000000000">+00 0000 0000</a></li>
+            <li><span class="muted">Tel:</span> <a href="tel:+53 00000000">+53 0000 0000</a></li>
             <li><span class="muted">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
             <li><span class="muted">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
           </ul>
@@ -222,6 +222,7 @@
     WhatsApp · Agendar
   </a>
 
+  <script src="products-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

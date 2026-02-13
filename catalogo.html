@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo | Kairos Lab</title>
+  <meta name="description" content="Catálogo completo de productos Kairos Lab: styling, barba, cuidado capilar y más." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="catalogo">
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Ir al inicio">
+        <img class="brand__logo" src="assets/branding/logo.jpg" alt="Kairos Lab" />
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+          <span class="sr-only">Abrir menú</span>
+          ☰
+        </button>
+
+        <div class="nav__menu" id="navMenu" aria-hidden="true">
+          <a class="nav__link" href="index.html">Inicio</a>
+          <a class="nav__link" href="index.html#servicios">Servicios</a>
+          <a class="nav__link" href="index.html#ubicacion">Ubicación</a>
+          <a class="nav__link" href="index.html#contacto">Contacto</a>
+          <a class="btn btn--primary" id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section catalog-hero">
+      <div class="container">
+        <p class="badge">Catálogo completo</p>
+        <h1>Productos Kairos Lab</h1>
+        <p class="hero__subtitle">
+          Explora todos los productos disponibles para barba, cuidado capilar y estilizado.
+          Usa el buscador para encontrar rápido lo que necesitas.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="productos">
+      <div class="container">
+        <div class="section__head">
+          <h2>Ver todos los productos</h2>
+          <p>Estos son los productos más vendidos.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar__left">
+            <label class="search">
+              <span class="sr-only">Buscar</span>
+              <input id="productSearch" type="search" placeholder="Buscar por nombre, categoría o descripción…" />
+            </label>
+          </div>
+          <div class="toolbar__right">
+            <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
+            <a class="btn btn--ghost" href="index.html#productos">Volver a la home</a>
+          </div>
+        </div>
+
+        <div class="grid" id="productsGrid">
+          <!-- JS inserta cards -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div class="container footer__grid">
+        <div>
+          <h2>Kairos Lab</h2>
+          <p class="muted">
+            Barbería con estética minimalista: blanco y gris, enfoque premium y sin complicaciones.
+          </p>
+          <div class="social">
+            <a class="social__link" href="#" aria-label="Instagram (actualiza el link)">Instagram</a>
+            <a class="social__link" href="#" aria-label="TikTok (actualiza el link)">TikTok</a>
+          </div>
+        </div>
+
+        <div>
+          <h3>Contacto</h3>
+          <ul class="list">
+            <li><span class="muted">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
+            <li><span class="muted">Tel:</span> <a href="tel:+0000000000">+00 0000 0000</a></li>
+            <li><span class="muted">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
+            <li><span class="muted">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Horarios</h3>
+          <ul class="list">
+            <li><span class="muted">Lunes a domingo:</span> 10:00–22:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer__bottom">
+        <p class="muted">© <span id="year"></span> Kairos Lab. Todos los derechos reservados.</p>
+        <a class="muted" href="#top">Volver arriba ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <a class="float-cta" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
+    WhatsApp · Agendar
+  </a>
+
+  <script src="products-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
