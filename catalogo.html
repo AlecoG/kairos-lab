@@ -63,6 +63,26 @@
           </div>
         </div>
 
+        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar por categoría">
+          <!-- JS inserta categorías -->
+        </div>
+
+        <aside class="catalog-cart card" id="catalogCart" aria-live="polite">
+          <div class="catalog-cart__head">
+            <h3>Carrito</h3>
+            <span class="catalog-cart__count" id="cartCount">0 productos</span>
+          </div>
+
+          <div class="catalog-cart__items" id="cartItems">
+            <p class="muted">Aún no agregas productos.</p>
+          </div>
+
+          <div class="catalog-cart__actions">
+            <button class="btn btn--ghost" id="clearCart" type="button">Vaciar carrito</button>
+            <button class="btn btn--primary" id="buyCart" type="button">Comprar por WhatsApp</button>
+          </div>
+        </aside>
+
         <div class="grid" id="productsGrid">
           <!-- JS inserta cards -->
         </div>
@@ -107,8 +127,8 @@
     </section>
   </main>
 
-  <a class="float-cta" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
-    WhatsApp · Agendar
+  <a class="float-cta float-cta--hidden" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Comprar por WhatsApp">
+    WhatsApp · Comprar
   </a>
 
   <script src="products-data.js"></script>

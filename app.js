@@ -35,7 +35,9 @@ function buildWhatsAppLink(message) {
 function setCtaLinks() {
   const link = buildWhatsAppLink(DEFAULT_MESSAGE);
 
-  const ids = ["btnCitaTop", "btnCitaHero", "btnCitaUbicacion", "floatCta", "waLinkFooter"];
+  const ids = isCatalogPage
+    ? ["btnCitaTop", "waLinkFooter"]
+    : ["btnCitaTop", "btnCitaHero", "btnCitaUbicacion", "floatCta", "waLinkFooter"];
   ids.forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.href = link;
@@ -93,6 +95,7 @@ function renderProducts(list) {
         <p class="item__desc">${p.desc}</p>
         <div class="item__actions">
           <span class="price">${p.price}</span>
+          ${isCatalogPage ? `<button class="btn btn--primary" data-add-product="${p.name}">Agregar al carrito</button>` : ""}
           <button class="btn btn--ghost" data-product="${p.name}">Preguntar por este producto</button>
         </div>
       </div>
@@ -113,24 +116,168 @@ function initSearch() {
   const input = document.getElementById("productSearch");
   const clearBtn = document.getElementById("clearFilters");
   const grid = document.getElementById("productsGrid");
+  const categoryFilters = document.getElementById("categoryFilters");
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
+  const clearCartBtn = document.getElementById("clearCart");
+  const buyCartBtn = document.getElementById("buyCart");
+  const floatBuyBtn = document.getElementById("floatCta");
 
   if (!input || !clearBtn || !grid) return;
 
+  const categories = Array.from(
+    new Set(visibleProducts.map((p) => p.category).filter(Boolean))
+  );
+  const productByName = new Map(visibleProducts.map((p) => [p.name, p]));
+  let activeCategory = "all";
+  const cartState = new Map();
+
+  const getTotalCartItems = () => Array.from(cartState.values())
+    .reduce((total, item) => total + item.qty, 0);
+
+  const setCartButtonsState = () => {
+    if (!clearCartBtn || !buyCartBtn) return;
+    const hasItems = cartState.size > 0;
+    clearCartBtn.disabled = !hasItems;
+    buyCartBtn.disabled = !hasItems;
+  };
+
+  const renderCart = () => {
+    if (!isCatalogPage || !cartItems || !cartCount) return;
+
+    const totalItems = getTotalCartItems();
+    cartCount.textContent = `${totalItems} ${totalItems === 1 ? "producto" : "productos"}`;
+
+    if (cartState.size === 0) {
+      cartItems.innerHTML = `<p class="muted">Aún no agregas productos.</p>`;
+      setCartButtonsState();
+      return;
+    }
+
+    cartItems.innerHTML = Array.from(cartState.values()).map((item) => `
+      <div class="cart-item">
+        <div>
+          <strong>${item.name}</strong>
+          <p class="muted">${item.category}</p>
+        </div>
+        <div class="cart-item__controls">
+          <button class="cart-qty-btn" type="button" data-cart-action="decrease" data-cart-product="${item.name}" aria-label="Quitar una unidad">-</button>
+          <span class="cart-qty">${item.qty}</span>
+          <button class="cart-qty-btn" type="button" data-cart-action="increase" data-cart-product="${item.name}" aria-label="Agregar una unidad">+</button>
+          <button class="cart-remove-btn" type="button" data-cart-action="remove" data-cart-product="${item.name}">Quitar</button>
+        </div>
+      </div>
+    `).join("");
+
+    setCartButtonsState();
+  };
+
+  const addToCart = (productName) => {
+    if (!productName) return;
+    const product = productByName.get(productName);
+    if (!product) return;
+
+    const current = cartState.get(productName);
+    if (current) {
+      current.qty += 1;
+    } else {
+      cartState.set(productName, { name: product.name, category: product.category, qty: 1 });
+    }
+    renderCart();
+  };
+
+  const updateCartItem = (productName, action) => {
+    const current = cartState.get(productName);
+    if (!current) return;
+
+    if (action === "increase") {
+      current.qty += 1;
+    } else if (action === "decrease") {
+      current.qty -= 1;
+      if (current.qty <= 0) cartState.delete(productName);
+    } else if (action === "remove") {
+      cartState.delete(productName);
+    }
+
+    renderCart();
+  };
+
+  const sendCartToWhatsApp = () => {
+    if (!cartState.size) {
+      buyCartBtn?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    const lines = Array.from(cartState.values()).map((item, i) =>
+      `${i + 1}. ${item.name} x${item.qty}`
+    );
+
+    const msg = [
+      "Hola, quiero hacer esta compra en Kairos Lab:",
+      "",
+      ...lines,
+      "",
+      `Total de unidades: ${getTotalCartItems()}.`,
+      "¿Me confirman disponibilidad y forma de pago?"
+    ].join("\n");
+
+    window.open(buildWhatsAppLink(msg), "_blank", "noopener");
+  };
+
+  const renderCategoryFilters = () => {
+    if (!categoryFilters) return;
+
+    const options = [{ label: "Todos", value: "all" }].concat(
+      categories.map((category) => ({ label: category, value: category }))
+    );
+
+    categoryFilters.innerHTML = options.map((option) => `
+      <button
+        class="filter-chip${option.value === activeCategory ? " is-active" : ""}"
+        type="button"
+        data-category="${option.value}"
+        aria-pressed="${option.value === activeCategory ? "true" : "false"}"
+      >
+        ${option.label}
+      </button>
+    `).join("");
+  };
+
   const apply = () => {
     const q = input.value.trim().toLowerCase();
-    const filtered = visibleProducts.filter(p =>
-      `${p.name} ${p.category} ${p.desc}`.toLowerCase().includes(q)
-    );
+    const filtered = visibleProducts.filter((p) => {
+      const matchesSearch = `${p.name} ${p.category} ${p.desc}`
+        .toLowerCase()
+        .includes(q);
+      const matchesCategory = activeCategory === "all" || p.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
     renderProducts(filtered);
   };
 
   input.addEventListener("input", apply);
   clearBtn.addEventListener("click", () => {
     input.value = "";
-    renderProducts(visibleProducts);
+    activeCategory = "all";
+    renderCategoryFilters();
+    apply();
+  });
+
+  categoryFilters?.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-category]");
+    if (!btn) return;
+    activeCategory = btn.getAttribute("data-category") || "all";
+    renderCategoryFilters();
+    apply();
   });
 
   grid.addEventListener("click", (e) => {
+    const addBtn = e.target.closest("button[data-add-product]");
+    if (addBtn && isCatalogPage) {
+      addToCart(addBtn.getAttribute("data-add-product"));
+      return;
+    }
+
     const btn = e.target.closest("button[data-product]");
     if (!btn) return;
 
@@ -139,7 +286,41 @@ function initSearch() {
     window.open(buildWhatsAppLink(msg), "_blank", "noopener");
   });
 
-  renderProducts(visibleProducts);
+  cartItems?.addEventListener("click", (e) => {
+    const actionBtn = e.target.closest("button[data-cart-action]");
+    if (!actionBtn) return;
+
+    const productName = actionBtn.getAttribute("data-cart-product") || "";
+    const action = actionBtn.getAttribute("data-cart-action") || "";
+    updateCartItem(productName, action);
+  });
+
+  clearCartBtn?.addEventListener("click", () => {
+    cartState.clear();
+    renderCart();
+  });
+
+  buyCartBtn?.addEventListener("click", sendCartToWhatsApp);
+  floatBuyBtn?.addEventListener("click", (e) => {
+    if (!isCatalogPage) return;
+    e.preventDefault();
+    sendCartToWhatsApp();
+  });
+
+  if (isCatalogPage && floatBuyBtn && buyCartBtn) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const shouldShow = !entry.isIntersecting;
+        floatBuyBtn.classList.toggle("float-cta--hidden", !shouldShow);
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(buyCartBtn);
+  }
+
+  renderCategoryFilters();
+  renderCart();
+  apply();
 }
 
 function initMobileNav() {
@@ -189,9 +370,45 @@ function initYear() {
   if (el) el.textContent = String(new Date().getFullYear());
 }
 
+function initHomeFloatingCtaVisibility() {
+  if (isCatalogPage) return;
+
+  const floatCta = document.getElementById("floatCta");
+  const heroWhatsAppBtn = document.getElementById("btnCitaHero");
+  const quickFormSubmitBtn = document.querySelector("#quickForm button[type='submit']");
+
+  if (!floatCta || !heroWhatsAppBtn || !quickFormSubmitBtn) return;
+
+  const visibility = new Map([
+    [heroWhatsAppBtn, false],
+    [quickFormSubmitBtn, false],
+  ]);
+
+  const updateFloatVisibility = () => {
+    const anyPrimaryButtonVisible = Array.from(visibility.values()).some(Boolean);
+    floatCta.classList.toggle("float-cta--hidden", anyPrimaryButtonVisible);
+  };
+
+  floatCta.classList.add("float-cta--hidden");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        visibility.set(entry.target, entry.isIntersecting);
+      });
+      updateFloatVisibility();
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(heroWhatsAppBtn);
+  observer.observe(quickFormSubmitBtn);
+}
+
 setCtaLinks();
 renderServices();
 initSearch();
 initMobileNav();
 initQuickForm();
 initYear();
+initHomeFloatingCtaVisibility();
