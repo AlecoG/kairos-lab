@@ -5,13 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catálogo | Kairos Lab</title>
   <meta name="description" content="Catálogo completo de productos Kairos Lab: styling, barba, cuidado capilar y más." />
+  <link
+    rel="preload"
+    as="image"
+    href="assets/branding/logo-308.webp"
+    imagesrcset="assets/branding/logo-154.webp 154w, assets/branding/logo-308.webp 308w"
+    imagesizes="(max-width: 640px) 170px, 220px"
+    fetchpriority="high"
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="catalogo">
   <header class="header" id="top">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Ir al inicio">
-        <img class="brand__logo" src="assets/branding/logo.jpg" alt="Kairos Lab" />
+        <picture>
+          <source
+            type="image/webp"
+            srcset="assets/branding/logo-154.webp 154w, assets/branding/logo-308.webp 308w"
+            sizes="(max-width: 640px) 170px, 220px"
+          />
+          <img
+            class="brand__logo"
+            src="assets/branding/logo.jpg"
+            alt="Kairos Lab"
+            width="306"
+            height="146"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       </a>
 
       <nav class="nav" aria-label="Navegación principal">

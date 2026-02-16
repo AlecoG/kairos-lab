@@ -56,6 +56,9 @@ img{ max-width:100%; display:block; }
   text-decoration:none;
   flex-shrink: 0;
 }
+.brand picture{
+  display: block;
+}
 .brand__logo{
   height: 50px;
   width: auto;
