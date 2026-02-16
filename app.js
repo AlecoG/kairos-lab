@@ -24,6 +24,19 @@ function getCategoryFallback(category) {
   return "assets/products/styling.svg";
 }
 
+function getOptimizedSources(imagePath) {
+  if (!imagePath || !/\.jpg$/i.test(imagePath)) {
+    return { src: imagePath, srcset: "", original: imagePath };
+  }
+
+  const base = imagePath.replace(/\.jpg$/i, "");
+  return {
+    src: `${base}-480.webp`,
+    srcset: `${base}-480.webp 480w, ${base}-960.webp 960w`,
+    original: imagePath,
+  };
+}
+
 function buildWhatsAppLink(message) {
   if (!/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
     console.warn("WHATSAPP_NUMBER inválido. Usa solo dígitos, sin '+' ni espacios.");
@@ -76,15 +89,23 @@ function renderProducts(list) {
   const grid = document.getElementById("productsGrid");
   if (!grid) return;
 
-  grid.innerHTML = list.map((p) => `
+  grid.innerHTML = list.map((p) => {
+    const optimized = getOptimizedSources(p.image || "");
+    return `
     <article class="item">
       <div class="item__media">
         <img
           class="item__image"
-          src="${p.image || getCategoryFallback(p.category)}"
+          src="${optimized.src || getCategoryFallback(p.category)}"
+          srcset="${optimized.srcset}"
+          sizes="(max-width: 640px) 84vw, (max-width: 920px) 48vw, 32vw"
+          data-original="${optimized.original || ""}"
           data-fallback="${getCategoryFallback(p.category)}"
           alt="${p.name}"
+          width="960"
+          height="960"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="item__body">
@@ -100,12 +121,22 @@ function renderProducts(list) {
         </div>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 
   grid.querySelectorAll(".item__image").forEach((img) => {
     img.addEventListener("error", () => {
+      const original = img.dataset.original;
       const fallback = img.dataset.fallback;
+
+      if (original && img.getAttribute("src") !== original) {
+        img.removeAttribute("srcset");
+        img.setAttribute("src", original);
+        return;
+      }
+
       if (fallback && img.getAttribute("src") !== fallback) {
+        img.removeAttribute("srcset");
         img.setAttribute("src", fallback);
       }
     }, { once: true });
@@ -405,6 +436,33 @@ function initHomeFloatingCtaVisibility() {
   observer.observe(quickFormSubmitBtn);
 }
 
+function initDeferredMap() {
+  const frame = document.querySelector(".map iframe[data-src]");
+  if (!frame) return;
+
+  const loadMap = () => {
+    if (!frame.getAttribute("src")) {
+      frame.setAttribute("src", frame.dataset.src || "");
+    }
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    loadMap();
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, current) => {
+      if (!entries[0]?.isIntersecting) return;
+      loadMap();
+      current.disconnect();
+    },
+    { rootMargin: "250px 0px" }
+  );
+
+  observer.observe(frame);
+}
+
 setCtaLinks();
 renderServices();
 initSearch();
@@ -412,3 +470,4 @@ initMobileNav();
 initQuickForm();
 initYear();
 initHomeFloatingCtaVisibility();
+initDeferredMap();
