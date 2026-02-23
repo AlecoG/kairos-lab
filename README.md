@@ -31,5 +31,13 @@ Nota: también hay un botón con link directo a Google Maps en esa misma secció
 2. Ejecuta en local con `npm run dev`.
 3. Genera build estático con `npm run build`.
 
+## Migración gradual a Tailwind CSS
+- Tailwind ya está configurado con:
+  - `tailwind.config.cjs`
+  - `postcss.config.cjs`
+  - `src/styles/tailwind.css`
+- `preflight` está desactivado para no romper los estilos actuales de `public/styles.css`.
+- Puedes migrar por secciones agregando clases Tailwind en `.astro` y creando componentes en `@layer components`.
+
 ## Prompt para construir imagenes
 Genera una fotografía profesional de producto estilo catálogo premium minimalista para tienda online de cuidado capilar masculino. Usa un fondo gris muy claro uniforme tipo lujo (#F5F5F5), completamente limpio y sin textura ni degradados. El producto debe estar perfectamente centrado (horizontal y verticalmente), con ángulo frontal recto y simétrico. Ajusta el encuadre para que el producto ocupe aproximadamente entre 55% y 65% del espacio total de la imagen, dejando suficiente margen alrededor para que no se corte dentro de una tarjeta de producto en e-commerce. Mantén proporciones reales sin deformar el envase. Utiliza iluminación de estudio suave y uniforme, con una sombra muy sutil y difusa debajo del producto para dar profundidad sin que sea dominante. Respeta completamente los colores originales, etiqueta y branding, sin añadir texto, efectos, elementos decorativos ni accesorios. La imagen debe estar en formato cuadrado 1:1, con resolución mínima de 1200x1200 px, alta nitidez y acabado limpio, elegante y consistente entre todos los productos para mantener uniformidad visual en el catálogo.
