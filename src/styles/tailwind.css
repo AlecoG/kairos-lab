@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .tw-chip {
-    @apply inline-flex items-center rounded-full border border-slate-300 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700;
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  *,
+  *::before,
+  *::after {
+    @apply box-border;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+
+  img {
+    @apply block max-w-full;
   }
 }

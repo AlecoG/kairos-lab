@@ -14,11 +14,22 @@ const services = [
 
 const rawBase = document.body?.dataset?.base || "/";
 const siteBase = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+const BTN_BASE = "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#e8e8e8] px-4 py-3 font-bold";
+const BTN_PRIMARY = `${BTN_BASE} border-[#111] bg-[#111] text-white`;
+const BTN_GHOST = `${BTN_BASE} bg-transparent text-[#111111]`;
+const FLOAT_HIDDEN_CLASSES = ["opacity-0", "invisible", "pointer-events-none", "translate-y-2.5"];
 
 function withBase(path) {
   if (!path) return path;
   if (/^(?:https?:)?\/\//i.test(path) || path.startsWith("data:")) return path;
   return `${siteBase}${String(path).replace(/^\/+/, "")}`;
+}
+
+function setFloatHidden(element, hidden) {
+  if (!element) return;
+  FLOAT_HIDDEN_CLASSES.forEach((className) => {
+    element.classList.toggle(className, hidden);
+  });
 }
 
 const products = window.KAIROS_PRODUCTS || [];
@@ -80,7 +91,7 @@ function renderServices() {
       <p class="m-0 leading-relaxed text-[#6b6b6b]">${s.desc}</p>
       <div class="flex flex-wrap items-center gap-2.5 pt-1">
         <span class="font-black">${s.price}</span>
-        <button class="btn btn--ghost" data-service="${s.name}">Agendar este servicio</button>
+        <button class="${BTN_GHOST}" data-service="${s.name}">Agendar este servicio</button>
       </div>
     </article>
   `).join("");
@@ -105,7 +116,7 @@ function renderProducts(list) {
     <article class="grid min-h-[160px] gap-2.5 rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,.05)] transition-all duration-200 hover:scale-[1.01] hover:border-[#d6d6d6] hover:shadow-[0_14px_28px_rgba(0,0,0,.1)] max-[640px]:[flex:0_0_84%]">
       <div class="overflow-hidden rounded-xl border border-[#e8e8e8] bg-gradient-to-b from-[#fafafa] to-[#efefef] p-1">
         <img
-          class="block h-[310px] w-full origin-center object-contain transition-transform duration-300 ease-out hover:scale-105"
+          class="js-product-image block h-[310px] w-full origin-center object-contain transition-transform duration-300 ease-out hover:scale-105"
           src="${optimized.src || getCategoryFallback(p.category)}"
           srcset="${optimized.srcset}"
           sizes="(max-width: 640px) 84vw, (max-width: 920px) 48vw, 32vw"
@@ -126,15 +137,15 @@ function renderProducts(list) {
         <p class="m-0 leading-relaxed text-[#6b6b6b]">${p.desc}</p>
         <div class="flex flex-wrap items-center gap-2.5 pt-1">
           <span class="font-black">${p.price}</span>
-          ${isCatalogPage ? `<button class="btn btn--primary" data-add-product="${p.name}">Agregar al carrito</button>` : ""}
-          <button class="btn btn--ghost" data-product="${p.name}">Preguntar por este producto</button>
+          ${isCatalogPage ? `<button class="${BTN_PRIMARY}" data-add-product="${p.name}">Agregar al carrito</button>` : ""}
+          <button class="${BTN_GHOST}" data-product="${p.name}">Preguntar por este producto</button>
         </div>
       </div>
     </article>
   `;
   }).join("");
 
-  grid.querySelectorAll(".item__image").forEach((img) => {
+  grid.querySelectorAll(".js-product-image").forEach((img) => {
     img.addEventListener("error", () => {
       const original = img.dataset.original;
       const fallback = img.dataset.fallback;
@@ -190,22 +201,22 @@ function initSearch() {
     cartCount.textContent = `${totalItems} ${totalItems === 1 ? "producto" : "productos"}`;
 
     if (cartState.size === 0) {
-      cartItems.innerHTML = `<p class="muted">Aún no agregas productos.</p>`;
+      cartItems.innerHTML = `<p class="text-[#6b6b6b]">Aún no agregas productos.</p>`;
       setCartButtonsState();
       return;
     }
 
     cartItems.innerHTML = Array.from(cartState.values()).map((item) => `
-      <div class="cart-item">
+      <div class="flex items-center justify-between gap-3 rounded-xl border border-[#e8e8e8] bg-white px-3 py-2.5 max-[640px]:flex-col max-[640px]:items-start">
         <div>
           <strong>${item.name}</strong>
-          <p class="muted">${item.category}</p>
+          <p class="m-[.15rem_0_0] text-sm text-[#6b6b6b]">${item.category}</p>
         </div>
-        <div class="cart-item__controls">
-          <button class="cart-qty-btn" type="button" data-cart-action="decrease" data-cart-product="${item.name}" aria-label="Quitar una unidad">-</button>
-          <span class="cart-qty">${item.qty}</span>
-          <button class="cart-qty-btn" type="button" data-cart-action="increase" data-cart-product="${item.name}" aria-label="Agregar una unidad">+</button>
-          <button class="cart-remove-btn" type="button" data-cart-action="remove" data-cart-product="${item.name}">Quitar</button>
+        <div class="flex items-center gap-2">
+          <button class="min-w-[34px] cursor-pointer rounded-[10px] border border-[#e8e8e8] bg-white px-2 py-1 font-extrabold" type="button" data-cart-action="decrease" data-cart-product="${item.name}" aria-label="Quitar una unidad">-</button>
+          <span class="min-w-[20px] text-center font-extrabold">${item.qty}</span>
+          <button class="min-w-[34px] cursor-pointer rounded-[10px] border border-[#e8e8e8] bg-white px-2 py-1 font-extrabold" type="button" data-cart-action="increase" data-cart-product="${item.name}" aria-label="Agregar una unidad">+</button>
+          <button class="cursor-pointer rounded-[10px] border border-[#e8e8e8] bg-white px-2 py-1 text-sm font-extrabold text-[#6b6b6b]" type="button" data-cart-action="remove" data-cart-product="${item.name}">Quitar</button>
         </div>
       </div>
     `).join("");
@@ -356,7 +367,7 @@ function initSearch() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const shouldShow = !entry.isIntersecting;
-        floatBuyBtn.classList.toggle("float-cta--hidden", !shouldShow);
+        setFloatHidden(floatBuyBtn, !shouldShow);
       },
       { threshold: 0.2 }
     );
@@ -431,10 +442,10 @@ function initHomeFloatingCtaVisibility() {
 
   const updateFloatVisibility = () => {
     const anyPrimaryButtonVisible = Array.from(visibility.values()).some(Boolean);
-    floatCta.classList.toggle("float-cta--hidden", anyPrimaryButtonVisible);
+    setFloatHidden(floatCta, anyPrimaryButtonVisible);
   };
 
-  floatCta.classList.add("float-cta--hidden");
+  setFloatHidden(floatCta, true);
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -451,7 +462,7 @@ function initHomeFloatingCtaVisibility() {
 }
 
 function initDeferredMap() {
-  const frame = document.querySelector(".map iframe[data-src]");
+  const frame = document.querySelector("#ubicacion iframe[data-src]");
   if (!frame) return;
 
   const loadMap = () => {

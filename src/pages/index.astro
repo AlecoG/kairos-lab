@@ -2,6 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+const containerClass = "mx-auto w-[min(100%-2rem,1100px)]";
+const btnBase = "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#e8e8e8] px-4 py-3 font-bold no-underline";
+const btnPrimary = `${btnBase} border-[#111] bg-[#111] text-white`;
+const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
+const fieldLabelClass = "text-sm font-bold text-[#6b6b6b]";
+const fieldControlClass = "w-full rounded-xl border border-[#e8e8e8] bg-white px-3.5 py-3 outline-none focus:border-[#bdbdbd] focus:ring-4 focus:ring-black/5";
 ---
 
 <BaseLayout
@@ -21,7 +27,7 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
   </Fragment>
 
   <header class="sticky top-0 z-20 border-b border-[#e8e8e8] bg-white/85 backdrop-blur-[10px]" id="top">
-    <div class="container flex items-center justify-between gap-4 py-3.5">
+    <div class={`${containerClass} flex items-center justify-between gap-4 py-3.5`}>
       <a class="flex shrink-0 items-center no-underline" href="#top" aria-label="Ir al inicio">
         <picture class="block">
           <source
@@ -61,7 +67,7 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
           <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href="#productos">Productos</a>
           <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href="#ubicacion">Ubicación</a>
           <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href="#contacto">Contacto</a>
-          <a class="btn btn--primary" id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
+          <a class={btnPrimary} id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
         </div>
       </nav>
     </div>
@@ -72,28 +78,28 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
       class="border-b border-[#e8e8e8] py-10 md:py-14"
       style="background: radial-gradient(800px 400px at 10% 10%, rgba(0,0,0,.06), transparent 60%), radial-gradient(800px 400px at 90% 30%, rgba(0,0,0,.04), transparent 60%);"
     >
-      <div class="container grid items-start gap-8 lg:grid-cols-[1.1fr_.9fr]">
-        <div class="hero__content">
-          <p class="tw-chip">Barbería · Estilo · Cuidado capilar</p>
-          <h1>Kairos Lab</h1>
+      <div class={`${containerClass} grid items-start gap-8 lg:grid-cols-[1.1fr_.9fr]`}>
+        <div>
+          <p class="inline-flex items-center rounded-full border border-[#e8e8e8] bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#6b6b6b]">Barbería · Estilo · Cuidado capilar</p>
+          <h1 class="mb-2 mt-3 text-[clamp(2.2rem,4vw,3.2rem)]">Kairos Lab</h1>
           <p class="mb-5 text-[1.05rem] leading-relaxed text-[#6b6b6b]">
             Una experiencia limpia y precisa: corte, barba, cejas, lavado y tratamientos capilares.
             Agenda tu cita en segundos por WhatsApp.
           </p>
 
           <div class="mb-6 flex flex-wrap gap-3.5">
-            <a class="btn btn--primary" id="btnCitaHero" href="#" target="_blank" rel="noopener">
+            <a class={btnPrimary} id="btnCitaHero" href="#" target="_blank" rel="noopener">
               Agendar cita por WhatsApp
             </a>
-            <a class="btn btn--ghost" href="#servicios">Ver servicios</a>
+            <a class={btnGhost} href="#servicios">Ver servicios</a>
           </div>
 
           <div class="grid grid-cols-1 gap-4 border-t border-dashed border-[#e8e8e8] pt-4 sm:grid-cols-2">
-            <div class="meta__item">
+            <div>
               <span class="block text-sm font-bold text-[#6b6b6b]">Horario</span>
               <span class="mt-1 block font-bold">Lun–Dom · 10:00–22:00</span>
             </div>
-            <div class="meta__item">
+            <div>
               <span class="block text-sm font-bold text-[#6b6b6b]">Atención</span>
               <span class="mt-1 block font-bold">Con cita · Walk-ins según disponibilidad</span>
             </div>
@@ -101,14 +107,14 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
         </div>
 
         <div>
-          <div class="card card--glass p-5">
-            <h2 class="card__title">Reserva rápida</h2>
-            <p class="card__text">Cuéntanos qué necesitas y te confirmamos el horario.</p>
+          <div class="rounded-2xl border border-[#e8e8e8] bg-white/75 p-5 shadow-[0_10px_30px_rgba(0,0,0,.08)] backdrop-blur">
+            <h2 class="mb-1">Reserva rápida</h2>
+            <p class="mb-4 text-[#6b6b6b]">Cuéntanos qué necesitas y te confirmamos el horario.</p>
 
-            <form class="form" id="quickForm">
-              <label class="field">
-                <span class="field__label">Servicio</span>
-                <select class="field__control" id="serviceSelect" required>
+            <form class="grid gap-3.5" id="quickForm">
+              <label class="grid gap-1.5">
+                <span class={fieldLabelClass}>Servicio</span>
+                <select class={fieldControlClass} id="serviceSelect" required>
                   <option value="Corte de cabello">Corte de cabello</option>
                   <option value="Barba">Barba</option>
                   <option value="Cejas">Cejas</option>
@@ -117,21 +123,21 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
                 </select>
               </label>
 
-              <label class="field">
-                <span class="field__label">Nombre</span>
-                <input class="field__control" id="nameInput" type="text" placeholder="Tu nombre" />
+              <label class="grid gap-1.5">
+                <span class={fieldLabelClass}>Nombre</span>
+                <input class={fieldControlClass} id="nameInput" type="text" placeholder="Tu nombre" />
               </label>
 
-              <label class="field">
-                <span class="field__label">Nota</span>
-                <input class="field__control" id="noteInput" type="text" placeholder="Ej. degradado medio, barba perfilada…" />
+              <label class="grid gap-1.5">
+                <span class={fieldLabelClass}>Nota</span>
+                <input class={fieldControlClass} id="noteInput" type="text" placeholder="Ej. degradado medio, barba perfilada…" />
               </label>
 
-              <button class="btn btn--primary btn--full" type="submit">
+              <button class={`${btnPrimary} w-full`} type="submit">
                 Enviar a WhatsApp
               </button>
 
-              <p class="form__hint">
+              <p class="m-0 text-sm text-[#6b6b6b]">
                 Al enviar, se abrirá WhatsApp con un mensaje listo para enviar.
               </p>
             </form>
@@ -141,18 +147,18 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
     </section>
 
     <section class="py-12" id="servicios">
-      <div class="container">
+      <div class={containerClass}>
         <div class="mb-5">
           <h2 class="mb-1.5 text-[2rem]">Servicios</h2>
           <p class="m-0 leading-relaxed text-[#6b6b6b]">Selecciona lo que necesitas. Todo con enfoque limpio, profesional y detallista.</p>
         </div>
 
-        <div class="grid" id="servicesGrid"></div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" id="servicesGrid"></div>
       </div>
     </section>
 
     <section class="border-y border-[#e8e8e8] bg-[#f6f6f6] py-12" id="productos">
-      <div class="container">
+      <div class={containerClass}>
         <div class="mb-5">
           <h2 class="mb-1.5 text-[2rem]">Catálogo de productos</h2>
           <p class="m-0 leading-relaxed text-[#6b6b6b]">Productos recomendados para mantener el look en casa.</p>
@@ -171,17 +177,17 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
             </label>
           </div>
           <div class="flex flex-wrap items-center gap-2.5">
-            <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
-            <a class="btn btn--primary" href={`${base}catalogo/`}>Ver todos los productos</a>
+            <button class={btnGhost} id="clearFilters">Limpiar</button>
+            <a class={btnPrimary} href={`${base}catalogo/`}>Ver todos los productos</a>
           </div>
         </div>
 
-        <div class="grid grid--carousel-mobile" id="productsGrid"></div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-[640px]:flex max-[640px]:snap-x max-[640px]:gap-4 max-[640px]:overflow-x-auto max-[640px]:pb-1.5 max-[640px]:[scroll-padding-inline:.1rem]" id="productsGrid"></div>
       </div>
     </section>
 
     <section class="py-12" id="ubicacion">
-      <div class="container">
+      <div class={containerClass}>
         <div class="mb-5">
           <h2 class="mb-1.5 text-[2rem]">Ubicación</h2>
           <p class="m-0 leading-relaxed text-[#6b6b6b]">Estamos en Vedado, La Habana. Puedes abrir la ruta o ver el mapa aquí mismo.</p>
@@ -190,13 +196,13 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
         <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-[.9fr_1.1fr]">
           <div class="rounded-2xl border border-[#e8e8e8] bg-white p-4">
             <h3>Dirección</h3>
-            <p class="muted">
+            <p class="text-[#6b6b6b]">
               Calle 21 / 8 y 10<br />
               Vedado, Havana, Cuba
             </p>
             <div class="mt-4 flex flex-wrap gap-3">
-              <a class="btn btn--ghost" href="https://maps.google.com/?q=Calle+21+%2F+8+y+10%2C+Vedado%2C+Havana%2C+Cuba" target="_blank" rel="noopener">Abrir en Google Maps</a>
-              <a class="btn btn--primary" id="btnCitaUbicacion" href="#" target="_blank" rel="noopener">Agendar cita</a>
+              <a class={btnGhost} href="https://maps.google.com/?q=Calle+21+%2F+8+y+10%2C+Vedado%2C+Havana%2C+Cuba" target="_blank" rel="noopener">Abrir en Google Maps</a>
+              <a class={btnPrimary} id="btnCitaUbicacion" href="#" target="_blank" rel="noopener">Agendar cita</a>
             </div>
           </div>
 
@@ -225,10 +231,10 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
     </section>
 
     <section class="border-y border-[#e8e8e8] bg-[#f6f6f6] py-12" id="contacto">
-      <div class="container grid gap-5 md:grid-cols-1 lg:grid-cols-[1.2fr_.9fr_.9fr]">
+      <div class={`${containerClass} grid gap-5 md:grid-cols-1 lg:grid-cols-[1.2fr_.9fr_.9fr]`}>
         <div>
           <h2>Kairos Lab</h2>
-          <p class="muted">
+          <p class="text-[#6b6b6b]">
             Barbería con estética minimalista: blanco y gris, enfoque premium y sin complicaciones.
           </p>
           <div class="mt-3 flex gap-3.5">
@@ -240,29 +246,29 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
         <div>
           <h3>Contacto</h3>
           <ul class="m-0 grid list-none gap-2 p-0">
-            <li><span class="muted">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
-            <li><span class="muted">Tel:</span> <a href="tel:+53 00000000">+53 0000 0000</a></li>
-            <li><span class="muted">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
-            <li><span class="muted">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
+            <li><span class="text-[#6b6b6b]">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
+            <li><span class="text-[#6b6b6b]">Tel:</span> <a href="tel:+53 00000000">+53 0000 0000</a></li>
+            <li><span class="text-[#6b6b6b]">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
+            <li><span class="text-[#6b6b6b]">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
           </ul>
         </div>
 
         <div>
           <h3>Horarios</h3>
           <ul class="m-0 grid list-none gap-2 p-0">
-            <li><span class="muted">Lunes a domingo:</span> 10:00–22:00</li>
+            <li><span class="text-[#6b6b6b]">Lunes a domingo:</span> 10:00–22:00</li>
           </ul>
         </div>
       </div>
 
-      <div class="container flex items-center justify-between gap-4 border-t border-[#e8e8e8] py-4 pb-9 max-[640px]:flex-col max-[640px]:items-start">
-        <p class="muted">© <span id="year"></span> Kairos Lab. Todos los derechos reservados.</p>
-        <a class="muted" href="#top">Volver arriba ↑</a>
+      <div class={`${containerClass} flex items-center justify-between gap-4 border-t border-[#e8e8e8] py-4 pb-9 max-[640px]:flex-col max-[640px]:items-start`}>
+        <p class="text-[#6b6b6b]">© <span id="year"></span> Kairos Lab. Todos los derechos reservados.</p>
+        <a class="text-[#6b6b6b]" href="#top">Volver arriba ↑</a>
       </div>
     </section>
   </main>
 
-  <a class="float-cta" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
+  <a class="fixed bottom-4 right-4 z-30 rounded-full bg-[#111] px-4 py-3.5 font-black text-white no-underline shadow-[0_10px_30px_rgba(0,0,0,.08)] transition-all duration-200" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
     WhatsApp · Agendar
   </a>
 </BaseLayout>
