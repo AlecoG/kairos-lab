@@ -20,17 +20,17 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
     />
   </Fragment>
 
-  <header class="header" id="top">
-    <div class="container header__inner">
-      <a class="brand" href={base} aria-label="Ir al inicio">
-        <picture>
+  <header class="sticky top-0 z-20 border-b border-[#e8e8e8] bg-white/85 backdrop-blur-[10px]" id="top">
+    <div class="container flex items-center justify-between gap-4 py-3.5">
+      <a class="flex shrink-0 items-center no-underline" href={base} aria-label="Ir al inicio">
+        <picture class="block">
           <source
             type="image/webp"
             srcset={`${base}assets/branding/logo-154.webp 154w, ${base}assets/branding/logo-308.webp 308w`}
             sizes="(max-width: 640px) 170px, 220px"
           />
           <img
-            class="brand__logo"
+            class="block h-[50px] w-auto max-w-[220px] object-contain max-[640px]:h-[42px] max-[640px]:max-w-[170px]"
             src={`${base}assets/branding/logo.jpg`}
             alt="Kairos Lab"
             width="306"
@@ -41,17 +41,26 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
         </picture>
       </a>
 
-      <nav class="nav" aria-label="Navegación principal">
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+      <nav class="relative" aria-label="Navegación principal">
+        <button
+          class="inline-flex cursor-pointer rounded-[10px] border border-[#e8e8e8] bg-white px-3 py-2 leading-none min-[641px]:hidden"
+          id="navToggle"
+          aria-expanded="false"
+          aria-controls="navMenu"
+        >
           <span class="sr-only">Abrir menú</span>
           ☰
         </button>
 
-        <div class="nav__menu" id="navMenu" aria-hidden="true">
-          <a class="nav__link" href={base}>Inicio</a>
-          <a class="nav__link" href={`${base}#servicios`}>Servicios</a>
-          <a class="nav__link" href={`${base}#ubicacion`}>Ubicación</a>
-          <a class="nav__link" href={`${base}#contacto`}>Contacto</a>
+        <div
+          class="hidden items-center gap-4 min-[641px]:flex max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[calc(100%+10px)] max-[640px]:w-[min(92vw,340px)] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:rounded-[14px] max-[640px]:border max-[640px]:border-[#e8e8e8] max-[640px]:bg-white max-[640px]:p-3 max-[640px]:shadow-[0_10px_30px_rgba(0,0,0,.08)] [&.is-open]:flex"
+          id="navMenu"
+          aria-hidden="true"
+        >
+          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={base}>Inicio</a>
+          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#servicios`}>Servicios</a>
+          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#ubicacion`}>Ubicación</a>
+          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#contacto`}>Contacto</a>
           <a class="btn btn--primary" id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
         </div>
       </nav>
