@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
@@ -11,8 +12,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <link
       rel="preload"
       as="image"
-      href="/assets/branding/logo-308.webp"
-      imagesrcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
+      href={`${base}assets/branding/logo-308.webp`}
+      imagesrcset={`${base}assets/branding/logo-154.webp 154w, ${base}assets/branding/logo-308.webp 308w`}
       imagesizes="(max-width: 640px) 170px, 220px"
       fetchpriority="high"
     />
@@ -24,12 +25,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <picture>
           <source
             type="image/webp"
-            srcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
+            srcset={`${base}assets/branding/logo-154.webp 154w, ${base}assets/branding/logo-308.webp 308w`}
             sizes="(max-width: 640px) 170px, 220px"
           />
           <img
             class="brand__logo"
-            src="/assets/branding/logo.jpg"
+            src={`${base}assets/branding/logo.jpg`}
             alt="Kairos Lab"
             width="306"
             height="146"
@@ -153,7 +154,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </div>
           <div class="toolbar__right">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
-            <a class="btn btn--primary" href="/catalogo/">Ver todos los productos</a>
+            <a class="btn btn--primary" href={`${base}catalogo/`}>Ver todos los productos</a>
           </div>
         </div>
 
