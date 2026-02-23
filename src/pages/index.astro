@@ -1,34 +1,35 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kairos Lab | Barbería</title>
-  <meta name="description" content="Kairos Lab Barbería: cortes, barba, cejas, lavado y tratamientos capilares. Agenda tu cita por WhatsApp." />
-  <link
-    rel="preload"
-    as="image"
-    href="assets/branding/logo-308.webp"
-    imagesrcset="assets/branding/logo-154.webp 154w, assets/branding/logo-308.webp 308w"
-    imagesizes="(max-width: 640px) 170px, 220px"
-    fetchpriority="high"
-  />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body data-page="home">
-  <!-- Header -->
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Kairos Lab | Barbería"
+  description="Kairos Lab Barbería: cortes, barba, cejas, lavado y tratamientos capilares. Agenda tu cita por WhatsApp."
+  page="home"
+>
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/branding/logo-308.webp"
+      imagesrcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
+      imagesizes="(max-width: 640px) 170px, 220px"
+      fetchpriority="high"
+    />
+  </Fragment>
+
   <header class="header" id="top">
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="Ir al inicio">
         <picture>
           <source
             type="image/webp"
-            srcset="assets/branding/logo-154.webp 154w, assets/branding/logo-308.webp 308w"
+            srcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
             sizes="(max-width: 640px) 170px, 220px"
           />
           <img
             class="brand__logo"
-            src="assets/branding/logo.jpg"
+            src="/assets/branding/logo.jpg"
             alt="Kairos Lab"
             width="306"
             height="146"
@@ -55,7 +56,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <main>
     <section class="hero">
       <div class="container hero__grid">
@@ -126,7 +126,6 @@
       </div>
     </section>
 
-    <!-- Servicios -->
     <section class="section" id="servicios">
       <div class="container">
         <div class="section__head">
@@ -134,13 +133,10 @@
           <p>Selecciona lo que necesitas. Todo con enfoque limpio, profesional y detallista.</p>
         </div>
 
-        <div class="grid" id="servicesGrid">
-          <!-- JS inserta cards -->
-        </div>
+        <div class="grid" id="servicesGrid"></div>
       </div>
     </section>
 
-    <!-- Productos -->
     <section class="section section--alt" id="productos">
       <div class="container">
         <div class="section__head">
@@ -157,17 +153,14 @@
           </div>
           <div class="toolbar__right">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
-            <a class="btn btn--primary" href="catalogo.html">Ver todos los productos</a>
+            <a class="btn btn--primary" href="/catalogo/">Ver todos los productos</a>
           </div>
         </div>
 
-        <div class="grid grid--carousel-mobile" id="productsGrid">
-          <!-- JS inserta cards -->
-        </div>
+        <div class="grid grid--carousel-mobile" id="productsGrid"></div>
       </div>
     </section>
 
-    <!-- Ubicación -->
     <section class="section" id="ubicacion">
       <div class="container">
         <div class="section__head">
@@ -210,7 +203,6 @@
       </div>
     </section>
 
-    <!-- Contacto -->
     <section class="section section--alt" id="contacto">
       <div class="container footer__grid">
         <div>
@@ -249,12 +241,7 @@
     </section>
   </main>
 
-  <!-- CTA flotante -->
   <a class="float-cta" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
     WhatsApp · Agendar
   </a>
-
-  <script src="products-data.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+</BaseLayout>
