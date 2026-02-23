@@ -6,7 +6,8 @@ interface Props {
 }
 
 const { title, description, page } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 ---
 
 <!doctype html>
@@ -19,7 +20,7 @@ const base = import.meta.env.BASE_URL;
     <slot name="head" />
     <link rel="stylesheet" href={`${base}styles.css`} />
   </head>
-  <body data-page={page}>
+  <body data-page={page} data-base={base}>
     <slot />
     <script src={`${base}products-data.js`}></script>
     <script src={`${base}app.js`}></script>

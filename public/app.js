@@ -12,28 +12,38 @@ const services = [
   { name: "Tratamientos capilares", desc: "Hidratación, reparación o control de frizz según tu necesidad.", minutes: 40, price: "$$$$" },
 ];
 
+const rawBase = document.body?.dataset?.base || "/";
+const siteBase = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+function withBase(path) {
+  if (!path) return path;
+  if (/^(?:https?:)?\/\//i.test(path) || path.startsWith("data:")) return path;
+  return `${siteBase}${String(path).replace(/^\/+/, "")}`;
+}
+
 const products = window.KAIROS_PRODUCTS || [];
 const isCatalogPage = document.body?.dataset?.page === "catalogo";
 const visibleProducts = isCatalogPage ? products : products.slice(0, 3);
 
 function getCategoryFallback(category) {
   const key = (category || "").toLowerCase();
-  if (key === "barba") return "assets/products/barba.svg";
-  if (key === "cuidado") return "assets/products/cuidado.svg";
-  if (key === "post afeitado") return "assets/products/post-afeitado.svg";
-  return "assets/products/styling.svg";
+  if (key === "barba") return withBase("assets/products/barba.svg");
+  if (key === "cuidado") return withBase("assets/products/cuidado.svg");
+  if (key === "post afeitado") return withBase("assets/products/post-afeitado.svg");
+  return withBase("assets/products/styling.svg");
 }
 
 function getOptimizedSources(imagePath) {
+  const normalizedPath = withBase(imagePath || "");
   if (!imagePath || !/\.jpg$/i.test(imagePath)) {
-    return { src: imagePath, srcset: "", original: imagePath };
+    return { src: normalizedPath, srcset: "", original: normalizedPath };
   }
 
-  const base = imagePath.replace(/\.jpg$/i, "");
+  const base = normalizedPath.replace(/\.jpg$/i, "");
   return {
     src: `${base}-480.webp`,
     srcset: `${base}-480.webp 480w, ${base}-960.webp 960w`,
-    original: imagePath,
+    original: normalizedPath,
   };
 }
 
