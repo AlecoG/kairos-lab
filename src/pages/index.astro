@@ -59,37 +59,40 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero__grid">
+    <section
+      class="border-b border-[#e8e8e8] py-10 md:py-14"
+      style="background: radial-gradient(800px 400px at 10% 10%, rgba(0,0,0,.06), transparent 60%), radial-gradient(800px 400px at 90% 30%, rgba(0,0,0,.04), transparent 60%);"
+    >
+      <div class="container grid items-start gap-8 lg:grid-cols-[1.1fr_.9fr]">
         <div class="hero__content">
-          <p class="badge tw-chip">Barbería · Estilo · Cuidado capilar</p>
+          <p class="tw-chip">Barbería · Estilo · Cuidado capilar</p>
           <h1>Kairos Lab</h1>
-          <p class="hero__subtitle">
+          <p class="mb-5 text-[1.05rem] leading-relaxed text-[#6b6b6b]">
             Una experiencia limpia y precisa: corte, barba, cejas, lavado y tratamientos capilares.
             Agenda tu cita en segundos por WhatsApp.
           </p>
 
-          <div class="hero__actions">
+          <div class="mb-6 flex flex-wrap gap-3.5">
             <a class="btn btn--primary" id="btnCitaHero" href="#" target="_blank" rel="noopener">
               Agendar cita por WhatsApp
             </a>
             <a class="btn btn--ghost" href="#servicios">Ver servicios</a>
           </div>
 
-          <div class="hero__meta">
+          <div class="grid grid-cols-1 gap-4 border-t border-dashed border-[#e8e8e8] pt-4 sm:grid-cols-2">
             <div class="meta__item">
-              <span class="meta__label">Horario</span>
-              <span class="meta__value">Lun–Dom · 10:00–22:00</span>
+              <span class="block text-sm font-bold text-[#6b6b6b]">Horario</span>
+              <span class="mt-1 block font-bold">Lun–Dom · 10:00–22:00</span>
             </div>
             <div class="meta__item">
-              <span class="meta__label">Atención</span>
-              <span class="meta__value">Con cita · Walk-ins según disponibilidad</span>
+              <span class="block text-sm font-bold text-[#6b6b6b]">Atención</span>
+              <span class="mt-1 block font-bold">Con cita · Walk-ins según disponibilidad</span>
             </div>
           </div>
         </div>
 
-        <div class="hero__card">
-          <div class="card card--glass">
+        <div>
+          <div class="card card--glass p-5">
             <h2 class="card__title">Reserva rápida</h2>
             <p class="card__text">Cuéntanos qué necesitas y te confirmamos el horario.</p>
 

@@ -113,13 +113,6 @@ img{ max-width:100%; display:block; }
 .btn--full{ width:100%; }
 
 /* Hero */
-.hero{
-  padding: 3.5rem 0 2.5rem;
-  background:
-    radial-gradient(800px 400px at 10% 10%, rgba(0,0,0,.06), transparent 60%),
-    radial-gradient(800px 400px at 90% 30%, rgba(0,0,0,.04), transparent 60%);
-  border-bottom: 1px solid var(--line);
-}
 .catalog-hero{
   padding: 2.8rem 0 1.6rem;
   border-bottom: 1px solid var(--line);
@@ -127,36 +120,7 @@ img{ max-width:100%; display:block; }
     radial-gradient(700px 360px at 14% 12%, rgba(0,0,0,.05), transparent 62%),
     radial-gradient(700px 360px at 86% 24%, rgba(0,0,0,.03), transparent 62%);
 }
-.hero__grid{
-  display:grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 2rem;
-  align-items: start;
-}
-.badge{
-  display:inline-flex;
-  gap:.5rem;
-  padding: .35rem .6rem;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,.6);
-  color: var(--muted);
-  font-weight: 700;
-  font-size: .9rem;
-}
 h1{ font-size: clamp(2.2rem, 4vw, 3.2rem); margin: .8rem 0 .6rem; }
-.hero__subtitle{ color: var(--muted); font-size: 1.05rem; line-height: 1.6; margin: 0 0 1.2rem; }
-.hero__actions{ display:flex; gap: .9rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-
-.hero__meta{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--line);
-}
-.meta__label{ display:block; color: var(--muted); font-weight: 700; font-size:.9rem; }
-.meta__value{ display:block; font-weight: 700; margin-top:.2rem; }
 
 .card{
   background: var(--card);
@@ -168,7 +132,6 @@ h1{ font-size: clamp(2.2rem, 4vw, 3.2rem); margin: .8rem 0 .6rem; }
   background: rgba(255,255,255,.75);
   backdrop-filter: blur(8px);
 }
-.hero__card .card{ padding: 1.2rem; }
 .card__title{ margin: 0 0 .3rem; }
 .card__text{ margin: 0 0 1rem; color: var(--muted); }
 
@@ -467,7 +430,6 @@ h1{ font-size: clamp(2.2rem, 4vw, 3.2rem); margin: .8rem 0 .6rem; }
 
 /* Responsive */
 @media (max-width: 920px){
-  .hero__grid{ grid-template-columns: 1fr; }
   .grid{ grid-template-columns: repeat(2, 1fr); }
   .split{ grid-template-columns: 1fr; }
   .footer__grid{ grid-template-columns: 1fr; }
