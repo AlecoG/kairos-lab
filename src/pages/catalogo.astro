@@ -86,20 +86,30 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
           <p>Estos son los productos más vendidos.</p>
         </div>
 
-        <div class="toolbar">
-          <div class="toolbar__left">
-            <label class="search">
+        <div class="mb-4 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <label class="block">
               <span class="sr-only">Buscar</span>
-              <input id="productSearch" type="search" placeholder="Buscar por nombre, categoría o descripción…" />
+              <input
+                class="w-full rounded-xl border border-[#e8e8e8] px-3.5 py-3 sm:w-[min(420px,70vw)]"
+                id="productSearch"
+                type="search"
+                placeholder="Buscar por nombre, categoría o descripción…"
+              />
             </label>
           </div>
-          <div class="toolbar__right">
+          <div class="flex flex-wrap items-center gap-2.5">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
             <a class="btn btn--ghost" href={`${base}#productos`}>Volver a la home</a>
           </div>
         </div>
 
-        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar por categoría"></div>
+        <div
+          class="mb-4 flex gap-2.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
+          id="categoryFilters"
+          role="group"
+          aria-label="Filtrar por categoría"
+        ></div>
 
         <aside class="catalog-cart card" id="catalogCart" aria-live="polite">
           <div class="catalog-cart__head">

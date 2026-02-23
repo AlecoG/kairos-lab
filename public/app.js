@@ -272,9 +272,13 @@ function initSearch() {
       categories.map((category) => ({ label: category, value: category }))
     );
 
+    const chipBase = "rounded-full border px-3 py-1.5 font-bold transition-all duration-200 whitespace-nowrap";
+    const chipActive = "border-[#111] bg-[#111] text-white";
+    const chipIdle = "border-[#e8e8e8] bg-white text-[#6b6b6b] hover:border-[#cecece] hover:text-[#111]";
+
     categoryFilters.innerHTML = options.map((option) => `
       <button
-        class="filter-chip${option.value === activeCategory ? " is-active" : ""}"
+        class="${chipBase} ${option.value === activeCategory ? chipActive : chipIdle}"
         type="button"
         data-category="${option.value}"
         aria-pressed="${option.value === activeCategory ? "true" : "false"}"

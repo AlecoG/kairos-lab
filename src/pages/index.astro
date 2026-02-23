@@ -158,14 +158,19 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
           <p>Productos recomendados para mantener el look en casa.</p>
         </div>
 
-        <div class="toolbar">
-          <div class="toolbar__left">
-            <label class="search">
+        <div class="mb-4 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <label class="block">
               <span class="sr-only">Buscar</span>
-              <input id="productSearch" type="search" placeholder="Buscar: cera, shampoo, aceite…" />
+              <input
+                class="w-full rounded-xl border border-[#e8e8e8] px-3.5 py-3 sm:w-[min(420px,70vw)]"
+                id="productSearch"
+                type="search"
+                placeholder="Buscar: cera, shampoo, aceite…"
+              />
             </label>
           </div>
-          <div class="toolbar__right">
+          <div class="flex flex-wrap items-center gap-2.5">
             <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
             <a class="btn btn--primary" href={`${base}catalogo/`}>Ver todos los productos</a>
           </div>
