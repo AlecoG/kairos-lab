@@ -4,10 +4,11 @@ import "../styles/tailwind.css";
 interface Props {
   title: string;
   description: string;
-  page: "home" | "catalogo";
+  page: "home" | "catalogo" | "admin";
+  includeStorefrontScripts?: boolean;
 }
 
-const { title, description, page } = Astro.props;
+const { title, description, page, includeStorefrontScripts = true } = Astro.props;
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 ---
@@ -24,7 +25,14 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
   </head>
   <body class="m-0 bg-white text-[#111111] [font-family:ui-sans-serif,system-ui,-apple-system,Segoe_UI,Roboto,Arial,Noto_Sans,Helvetica_Neue,sans-serif]" data-page={page} data-base={base}>
     <slot />
-    <script src={`${base}products-data.js`}></script>
-    <script src={`${base}app.js`}></script>
+    {
+      includeStorefrontScripts && (
+        <>
+          <script src={`${base}products-data.js`}></script>
+          <script src={`${base}product-store.js`}></script>
+          <script src={`${base}app.js`}></script>
+        </>
+      )
+    }
   </body>
 </html>

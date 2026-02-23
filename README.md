@@ -31,6 +31,15 @@ Nota: también hay un botón con link directo a Google Maps en esa misma secció
 2. Ejecuta en local con `npm run dev`.
 3. Genera build estático con `npm run build`.
 
+## Admin de productos (login + panel)
+- Login: `/admin/login/`
+- Panel: `/admin/panel/`
+- Credenciales demo:
+  - Usuario: `admin`
+  - Contraseña: `kairos123`
+- El panel guarda cambios en `localStorage` del navegador.
+- El catálogo público usa esos cambios para mostrar solo productos visibles y habilitados.
+
 ## Migración gradual a Tailwind CSS
 - Tailwind ya está configurado con:
   - `tailwind.config.cjs`

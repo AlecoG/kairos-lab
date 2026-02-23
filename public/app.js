@@ -32,9 +32,12 @@ function setFloatHidden(element, hidden) {
   });
 }
 
-const products = window.KAIROS_PRODUCTS || [];
+const products = window.KairosStore
+  ? window.KairosStore.getProducts(window.KAIROS_PRODUCTS || [])
+  : (window.KAIROS_PRODUCTS || []);
 const isCatalogPage = document.body?.dataset?.page === "catalogo";
-const visibleProducts = isCatalogPage ? products : products.slice(0, 3);
+const visibleProducts = products.filter((p) => p.visible !== false && p.enabled !== false);
+const storefrontProducts = isCatalogPage ? visibleProducts : visibleProducts.slice(0, 3);
 
 function getCategoryFallback(category) {
   const key = (category || "").toLowerCase();
@@ -112,6 +115,10 @@ function renderProducts(list) {
 
   grid.innerHTML = list.map((p) => {
     const optimized = getOptimizedSources(p.image || "");
+    const isOutOfStock = p.stockStatus === "agotado";
+    const statusLabel = isOutOfStock
+      ? `<span class="rounded-full border border-red-200 bg-red-50 px-2 py-1 text-xs font-bold text-red-700">Agotado</span>`
+      : "";
     return `
     <article class="grid min-h-[160px] gap-2.5 rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,.05)] transition-all duration-200 hover:scale-[1.01] hover:border-[#d6d6d6] hover:shadow-[0_14px_28px_rgba(0,0,0,.1)] max-[640px]:[flex:0_0_84%]">
       <div class="overflow-hidden rounded-xl border border-[#e8e8e8] bg-gradient-to-b from-[#fafafa] to-[#efefef] p-1">
@@ -137,7 +144,8 @@ function renderProducts(list) {
         <p class="m-0 leading-relaxed text-[#6b6b6b]">${p.desc}</p>
         <div class="flex flex-wrap items-center gap-2.5 pt-1">
           <span class="font-black">${p.price}</span>
-          ${isCatalogPage ? `<button class="${BTN_PRIMARY}" data-add-product="${p.name}">Agregar al carrito</button>` : ""}
+          ${statusLabel}
+          ${isCatalogPage ? `<button class="${BTN_PRIMARY} disabled:cursor-not-allowed disabled:opacity-50" data-add-product="${p.name}" ${isOutOfStock ? "disabled" : ""}>${isOutOfStock ? "No disponible" : "Agregar al carrito"}</button>` : ""}
           <button class="${BTN_GHOST}" data-product="${p.name}">Preguntar por este producto</button>
         </div>
       </div>
@@ -178,9 +186,9 @@ function initSearch() {
   if (!input || !clearBtn || !grid) return;
 
   const categories = Array.from(
-    new Set(visibleProducts.map((p) => p.category).filter(Boolean))
+    new Set(storefrontProducts.map((p) => p.category).filter(Boolean))
   );
-  const productByName = new Map(visibleProducts.map((p) => [p.name, p]));
+  const productByName = new Map(storefrontProducts.map((p) => [p.name, p]));
   let activeCategory = "all";
   const cartState = new Map();
 
@@ -228,6 +236,7 @@ function initSearch() {
     if (!productName) return;
     const product = productByName.get(productName);
     if (!product) return;
+    if (product.stockStatus === "agotado") return;
 
     const current = cartState.get(productName);
     if (current) {
@@ -301,7 +310,7 @@ function initSearch() {
 
   const apply = () => {
     const q = input.value.trim().toLowerCase();
-    const filtered = visibleProducts.filter((p) => {
+    const filtered = storefrontProducts.filter((p) => {
       const matchesSearch = `${p.name} ${p.category} ${p.desc}`
         .toLowerCase()
         .includes(q);
