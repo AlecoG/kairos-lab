@@ -1,0 +1,154 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Catálogo | Kairos Lab"
+  description="Catálogo completo de productos Kairos Lab: styling, barba, cuidado capilar y más."
+  page="catalogo"
+>
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/branding/logo-308.webp"
+      imagesrcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
+      imagesizes="(max-width: 640px) 170px, 220px"
+      fetchpriority="high"
+    />
+  </Fragment>
+
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="/" aria-label="Ir al inicio">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/assets/branding/logo-154.webp 154w, /assets/branding/logo-308.webp 308w"
+            sizes="(max-width: 640px) 170px, 220px"
+          />
+          <img
+            class="brand__logo"
+            src="/assets/branding/logo.jpg"
+            alt="Kairos Lab"
+            width="306"
+            height="146"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+          <span class="sr-only">Abrir menú</span>
+          ☰
+        </button>
+
+        <div class="nav__menu" id="navMenu" aria-hidden="true">
+          <a class="nav__link" href="/">Inicio</a>
+          <a class="nav__link" href="/#servicios">Servicios</a>
+          <a class="nav__link" href="/#ubicacion">Ubicación</a>
+          <a class="nav__link" href="/#contacto">Contacto</a>
+          <a class="btn btn--primary" id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section catalog-hero">
+      <div class="container">
+        <p class="badge">Catálogo completo</p>
+        <h1>Productos Kairos Lab</h1>
+        <p class="hero__subtitle">
+          Explora todos los productos disponibles para barba, cuidado capilar y estilizado.
+          Usa el buscador para encontrar rápido lo que necesitas.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="productos">
+      <div class="container">
+        <div class="section__head">
+          <h2>Ver todos los productos</h2>
+          <p>Estos son los productos más vendidos.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar__left">
+            <label class="search">
+              <span class="sr-only">Buscar</span>
+              <input id="productSearch" type="search" placeholder="Buscar por nombre, categoría o descripción…" />
+            </label>
+          </div>
+          <div class="toolbar__right">
+            <button class="btn btn--ghost" id="clearFilters">Limpiar</button>
+            <a class="btn btn--ghost" href="/#productos">Volver a la home</a>
+          </div>
+        </div>
+
+        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar por categoría"></div>
+
+        <aside class="catalog-cart card" id="catalogCart" aria-live="polite">
+          <div class="catalog-cart__head">
+            <h3>Carrito</h3>
+            <span class="catalog-cart__count" id="cartCount">0 productos</span>
+          </div>
+
+          <div class="catalog-cart__items" id="cartItems">
+            <p class="muted">Aún no agregas productos.</p>
+          </div>
+
+          <div class="catalog-cart__actions">
+            <button class="btn btn--ghost" id="clearCart" type="button">Vaciar carrito</button>
+            <button class="btn btn--primary" id="buyCart" type="button">Comprar por WhatsApp</button>
+          </div>
+        </aside>
+
+        <div class="grid" id="productsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div class="container footer__grid">
+        <div>
+          <h2>Kairos Lab</h2>
+          <p class="muted">
+            Barbería con estética minimalista: blanco y gris, enfoque premium y sin complicaciones.
+          </p>
+          <div class="social">
+            <a class="social__link" href="#" aria-label="Instagram (actualiza el link)">Instagram</a>
+            <a class="social__link" href="#" aria-label="TikTok (actualiza el link)">TikTok</a>
+          </div>
+        </div>
+
+        <div>
+          <h3>Contacto</h3>
+          <ul class="list">
+            <li><span class="muted">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
+            <li><span class="muted">Tel:</span> <a href="tel:+0000000000">+00 0000 0000</a></li>
+            <li><span class="muted">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
+            <li><span class="muted">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Horarios</h3>
+          <ul class="list">
+            <li><span class="muted">Lunes a domingo:</span> 10:00–22:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer__bottom">
+        <p class="muted">© <span id="year"></span> Kairos Lab. Todos los derechos reservados.</p>
+        <a class="muted" href="#top">Volver arriba ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <a class="float-cta float-cta--hidden" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Comprar por WhatsApp">
+    WhatsApp · Comprar
+  </a>
+</BaseLayout>

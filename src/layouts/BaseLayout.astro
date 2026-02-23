@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  page: "home" | "catalogo";
+}
+
+const { title, description, page } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <slot name="head" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page={page}>
+    <slot />
+    <script src="/products-data.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
