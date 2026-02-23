@@ -1,11 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import {
+  badgeClass,
+  brandLogoClass,
+  btnGhostClass,
+  btnPrimaryClass,
+  containerClass,
+  navLinkClass,
+  navMenuClass,
+  navToggleClass,
+} from "../lib/ui";
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
-const containerClass = "mx-auto w-[min(100%-2rem,1100px)]";
-const btnBase = "inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#e8e8e8] px-4 py-3 font-bold no-underline";
-const btnPrimary = `${btnBase} border-[#111] bg-[#111] text-white`;
-const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
 ---
 
 <BaseLayout
@@ -34,7 +41,7 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
             sizes="(max-width: 640px) 170px, 220px"
           />
           <img
-            class="block h-[50px] w-auto max-w-[220px] object-contain max-[640px]:h-[42px] max-[640px]:max-w-[170px]"
+            class={brandLogoClass}
             src={`${base}assets/branding/logo.jpg`}
             alt="Kairos Lab"
             width="306"
@@ -47,7 +54,7 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
 
       <nav class="relative" aria-label="Navegación principal">
         <button
-          class="inline-flex cursor-pointer rounded-[10px] border border-[#e8e8e8] bg-white px-3 py-2 leading-none min-[641px]:hidden"
+          class={navToggleClass}
           id="navToggle"
           aria-expanded="false"
           aria-controls="navMenu"
@@ -57,15 +64,15 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
         </button>
 
         <div
-          class="hidden items-center gap-4 min-[641px]:flex max-[640px]:absolute max-[640px]:right-0 max-[640px]:top-[calc(100%+10px)] max-[640px]:w-[min(92vw,340px)] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:rounded-[14px] max-[640px]:border max-[640px]:border-[#e8e8e8] max-[640px]:bg-white max-[640px]:p-3 max-[640px]:shadow-[0_10px_30px_rgba(0,0,0,.08)] [&.is-open]:flex"
+          class={navMenuClass}
           id="navMenu"
           aria-hidden="true"
         >
-          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={base}>Inicio</a>
-          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#servicios`}>Servicios</a>
-          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#ubicacion`}>Ubicación</a>
-          <a class="font-semibold text-[#6b6b6b] no-underline transition-colors hover:text-[#111111]" href={`${base}#contacto`}>Contacto</a>
-          <a class={btnPrimary} id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
+          <a class={navLinkClass} href={base}>Inicio</a>
+          <a class={navLinkClass} href={`${base}#servicios`}>Servicios</a>
+          <a class={navLinkClass} href={`${base}#ubicacion`}>Ubicación</a>
+          <a class={navLinkClass} href={`${base}#contacto`}>Contacto</a>
+          <a class={btnPrimaryClass} id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
         </div>
       </nav>
     </div>
@@ -77,7 +84,7 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
       style="background: radial-gradient(700px 360px at 14% 12%, rgba(0,0,0,.05), transparent 62%), radial-gradient(700px 360px at 86% 24%, rgba(0,0,0,.03), transparent 62%);"
     >
       <div class={containerClass}>
-        <p class="inline-flex items-center rounded-full border border-[#e8e8e8] bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#6b6b6b]">Catálogo completo</p>
+        <p class={badgeClass}>Catálogo completo</p>
         <h1 class="mb-2 mt-3 text-[clamp(2.2rem,4vw,3.2rem)]">Productos Kairos Lab</h1>
         <p class="m-0 max-w-4xl text-[1.05rem] leading-relaxed text-[#6b6b6b]">
           Explora todos los productos disponibles para barba, cuidado capilar y estilizado.
@@ -88,10 +95,7 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
 
     <section class="border-y border-[#e8e8e8] bg-[#f6f6f6] py-12" id="productos">
       <div class={containerClass}>
-        <div class="mb-5">
-          <h2 class="mb-1.5 text-[2rem]">Ver todos los productos</h2>
-          <p class="m-0 leading-relaxed text-[#6b6b6b]">Estos son los productos más vendidos.</p>
-        </div>
+        <SectionHeader title="Ver todos los productos" description="Estos son los productos más vendidos." />
 
         <div class="mb-4 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -106,8 +110,8 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
             </label>
           </div>
           <div class="flex flex-wrap items-center gap-2.5">
-            <button class={btnGhost} id="clearFilters">Limpiar</button>
-            <a class={btnGhost} href={`${base}#productos`}>Volver a la home</a>
+            <button class={btnGhostClass} id="clearFilters">Limpiar</button>
+            <a class={btnGhostClass} href={`${base}#productos`}>Volver a la home</a>
           </div>
         </div>
 
@@ -129,8 +133,8 @@ const btnGhost = `${btnBase} bg-transparent text-[#111111]`;
           </div>
 
           <div class="flex flex-wrap gap-2.5 max-[640px]:grid max-[640px]:grid-cols-1">
-            <button class={`${btnGhost} disabled:cursor-not-allowed disabled:opacity-50`} id="clearCart" type="button">Vaciar carrito</button>
-            <button class={`${btnPrimary} disabled:cursor-not-allowed disabled:opacity-50`} id="buyCart" type="button">Comprar por WhatsApp</button>
+            <button class={`${btnGhostClass} disabled:cursor-not-allowed disabled:opacity-50`} id="clearCart" type="button">Vaciar carrito</button>
+            <button class={`${btnPrimaryClass} disabled:cursor-not-allowed disabled:opacity-50`} id="buyCart" type="button">Comprar por WhatsApp</button>
           </div>
         </aside>
 

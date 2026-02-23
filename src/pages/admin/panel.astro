@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { badgeClass, btnGhostClass, btnPrimaryClass, containerWideClass, fieldControlClass, fieldLabelClass } from "../../lib/ui";
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
-const containerClass = "mx-auto w-[min(100%-2rem,1180px)]";
 ---
 
 <BaseLayout
@@ -12,16 +12,16 @@ const containerClass = "mx-auto w-[min(100%-2rem,1180px)]";
   includeStorefrontScripts={false}
 >
   <main id="adminPanel" class="min-h-screen bg-[#f6f6f6] py-10">
-    <section class={containerClass}>
+    <section class={containerWideClass}>
       <header class="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p class="mb-1 inline-flex rounded-full border border-[#e8e8e8] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#6b6b6b]">Administrador</p>
+          <p class={`${badgeClass} mb-1`}>Administrador</p>
           <h1 class="text-3xl font-black">Panel de productos</h1>
         </div>
 
         <div class="flex flex-wrap gap-2.5">
-          <a href={`${base}catalogo/`} class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#e8e8e8] bg-white px-4 py-3 font-bold text-[#111111] no-underline">Ver catálogo</a>
-          <button id="adminLogoutBtn" type="button" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#111] bg-[#111] px-4 py-3 font-bold text-white">Cerrar sesión</button>
+          <a href={`${base}catalogo/`} class={btnGhostClass}>Ver catálogo</a>
+          <button id="adminLogoutBtn" type="button" class={btnPrimaryClass}>Cerrar sesión</button>
         </div>
       </header>
 
@@ -59,25 +59,25 @@ const containerClass = "mx-auto w-[min(100%-2rem,1180px)]";
           <input id="editIndex" type="hidden" />
 
           <label class="grid gap-1.5">
-            <span class="text-sm font-bold text-[#6b6b6b]">Nombre</span>
-            <input id="editName" class="w-full rounded-xl border border-[#e8e8e8] bg-white px-3.5 py-3 outline-none focus:border-[#bdbdbd] focus:ring-4 focus:ring-black/5" type="text" required />
+            <span class={fieldLabelClass}>Nombre</span>
+            <input id="editName" class={fieldControlClass} type="text" required />
           </label>
 
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="grid gap-1.5">
-              <span class="text-sm font-bold text-[#6b6b6b]">Categoría</span>
-              <input id="editCategory" class="w-full rounded-xl border border-[#e8e8e8] bg-white px-3.5 py-3 outline-none focus:border-[#bdbdbd] focus:ring-4 focus:ring-black/5" type="text" required />
+              <span class={fieldLabelClass}>Categoría</span>
+              <input id="editCategory" class={fieldControlClass} type="text" required />
             </label>
 
             <label class="grid gap-1.5">
-              <span class="text-sm font-bold text-[#6b6b6b]">Precio</span>
-              <input id="editPrice" class="w-full rounded-xl border border-[#e8e8e8] bg-white px-3.5 py-3 outline-none focus:border-[#bdbdbd] focus:ring-4 focus:ring-black/5" type="text" required />
+              <span class={fieldLabelClass}>Precio</span>
+              <input id="editPrice" class={fieldControlClass} type="text" required />
             </label>
           </div>
 
           <label class="grid gap-1.5">
-            <span class="text-sm font-bold text-[#6b6b6b]">Estado de stock</span>
-            <select id="editStockStatus" class="w-full rounded-xl border border-[#e8e8e8] bg-white px-3.5 py-3 outline-none focus:border-[#bdbdbd] focus:ring-4 focus:ring-black/5">
+            <span class={fieldLabelClass}>Estado de stock</span>
+            <select id="editStockStatus" class={fieldControlClass}>
               <option value="disponible">Disponible</option>
               <option value="agotado">Agotado</option>
             </select>
@@ -94,7 +94,7 @@ const containerClass = "mx-auto w-[min(100%-2rem,1180px)]";
             </label>
           </div>
 
-          <button type="submit" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#111] bg-[#111] px-4 py-3 font-bold text-white">Guardar cambios</button>
+          <button type="submit" class={btnPrimaryClass}>Guardar cambios</button>
         </form>
       </div>
     </div>
