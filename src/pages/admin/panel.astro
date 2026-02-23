@@ -27,10 +27,31 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 
       <div id="adminStats" class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"></div>
 
-      <section class="rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,.08)]">
-        <h2 class="mb-3 text-xl font-black">Productos</h2>
+      <section class="mb-6 rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,.08)]">
+        <div class="mb-4 grid gap-3 md:grid-cols-[1fr_auto_auto_auto_auto]">
+          <label class="grid gap-1.5">
+            <span class={fieldLabelClass}>Buscar producto</span>
+            <input id="adminSearch" class={fieldControlClass} type="search" placeholder="Nombre, categoría o descripción" />
+          </label>
+
+          <label class="grid gap-1.5">
+            <span class={fieldLabelClass}>Filtro</span>
+            <select id="adminStateFilter" class={fieldControlClass}>
+              <option value="all">Todos</option>
+              <option value="visible">Visibles</option>
+              <option value="agotado">Agotados</option>
+              <option value="disabled">Deshabilitados / no visibles</option>
+            </select>
+          </label>
+
+          <button id="adminCreateBtn" type="button" class={btnPrimaryClass}>Crear producto</button>
+          <button id="adminExportBtn" type="button" class={btnGhostClass}>Exportar JSON</button>
+          <input id="adminImportInput" type="file" accept="application/json" class="hidden" />
+          <button id="adminImportBtn" type="button" class={btnGhostClass}>Importar JSON</button>
+        </div>
+
         <div class="overflow-x-auto">
-          <table class="w-full min-w-[860px] border-collapse">
+          <table class="w-full min-w-[980px] border-collapse">
             <thead>
               <tr class="bg-[#f8f8f8] text-left text-xs uppercase tracking-wide text-[#6b6b6b]">
                 <th class="px-3 py-2">Producto</th>
@@ -39,19 +60,27 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
                 <th class="px-3 py-2">Visible</th>
                 <th class="px-3 py-2">Habilitado</th>
                 <th class="px-3 py-2">Stock</th>
-                <th class="px-3 py-2 text-right">Acción</th>
+                <th class="px-3 py-2 text-right">Acciones</th>
               </tr>
             </thead>
             <tbody id="adminProductsTableBody"></tbody>
           </table>
         </div>
       </section>
+
+      <section class="rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_10px_30px_rgba(0,0,0,.08)]">
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-black">Historial de cambios</h2>
+          <button id="adminClearHistoryBtn" type="button" class={btnGhostClass}>Limpiar historial</button>
+        </div>
+        <ul id="adminHistoryList" class="m-0 grid max-h-[320px] list-none gap-2 overflow-auto p-0"></ul>
+      </section>
     </section>
 
     <div id="editProductModal" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/40 px-4">
-      <div class="w-full max-w-xl rounded-2xl border border-[#e8e8e8] bg-white p-5 shadow-[0_20px_45px_rgba(0,0,0,.2)]">
+      <div class="w-full max-w-2xl rounded-2xl border border-[#e8e8e8] bg-white p-5 shadow-[0_20px_45px_rgba(0,0,0,.2)]">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h3 class="text-xl font-black">Editar producto</h3>
+          <h3 id="editModalTitle" class="text-xl font-black">Editar producto</h3>
           <button id="closeEditModal" type="button" class="rounded-lg border border-[#e8e8e8] px-3 py-2 text-sm font-bold">Cerrar</button>
         </div>
 
@@ -61,6 +90,11 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
           <label class="grid gap-1.5">
             <span class={fieldLabelClass}>Nombre</span>
             <input id="editName" class={fieldControlClass} type="text" required />
+          </label>
+
+          <label class="grid gap-1.5">
+            <span class={fieldLabelClass}>Descripción</span>
+            <textarea id="editDesc" class={fieldControlClass} rows="3" required></textarea>
           </label>
 
           <div class="grid gap-4 sm:grid-cols-2">
@@ -94,7 +128,23 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
             </label>
           </div>
 
-          <button type="submit" class={btnPrimaryClass}>Guardar cambios</button>
+          <label class="grid gap-1.5">
+            <span class={fieldLabelClass}>Imagen (URL o DataURL)</span>
+            <input id="editImage" class={fieldControlClass} type="text" placeholder="assets/products/photos/mi-producto.jpg o data:image/..." />
+          </label>
+
+          <div class="grid gap-2">
+            <label class="inline-flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-[#e8e8e8] px-3 py-2 text-sm font-bold">
+              Subir imagen
+              <input id="editImageFile" type="file" accept="image/*" class="hidden" />
+            </label>
+            <img id="editImagePreview" class="hidden max-h-48 rounded-xl border border-[#e8e8e8] object-contain" alt="Vista previa" />
+          </div>
+
+          <div class="flex flex-wrap gap-2.5">
+            <button type="submit" class={btnPrimaryClass}>Guardar cambios</button>
+            <button id="deleteProductBtn" type="button" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 font-bold text-red-700">Eliminar producto</button>
+          </div>
         </form>
       </div>
     </div>

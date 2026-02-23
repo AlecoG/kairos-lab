@@ -145,8 +145,8 @@ function renderProducts(list) {
         <div class="flex flex-wrap items-center gap-2.5 pt-1">
           <span class="font-black">${p.price}</span>
           ${statusLabel}
-          ${isCatalogPage ? `<button class="${BTN_PRIMARY} disabled:cursor-not-allowed disabled:opacity-50" data-add-product="${p.name}" ${isOutOfStock ? "disabled" : ""}>${isOutOfStock ? "No disponible" : "Agregar al carrito"}</button>` : ""}
-          <button class="${BTN_GHOST}" data-product="${p.name}">Preguntar por este producto</button>
+          ${isCatalogPage ? `<button class="${BTN_PRIMARY} disabled:cursor-not-allowed disabled:opacity-50" data-add-product-id="${p.id}" ${isOutOfStock ? "disabled" : ""}>${isOutOfStock ? "No disponible" : "Agregar al carrito"}</button>` : ""}
+          <button class="${BTN_GHOST}" data-product-id="${p.id}">Preguntar por este producto</button>
         </div>
       </div>
     </article>
@@ -188,7 +188,7 @@ function initSearch() {
   const categories = Array.from(
     new Set(storefrontProducts.map((p) => p.category).filter(Boolean))
   );
-  const productByName = new Map(storefrontProducts.map((p) => [p.name, p]));
+  const productById = new Map(storefrontProducts.map((p) => [p.id, p]));
   let activeCategory = "all";
   const cartState = new Map();
 
@@ -232,17 +232,17 @@ function initSearch() {
     setCartButtonsState();
   };
 
-  const addToCart = (productName) => {
-    if (!productName) return;
-    const product = productByName.get(productName);
+  const addToCart = (productId) => {
+    if (!productId) return;
+    const product = productById.get(productId);
     if (!product) return;
     if (product.stockStatus === "agotado") return;
 
-    const current = cartState.get(productName);
+    const current = cartState.get(product.id);
     if (current) {
       current.qty += 1;
     } else {
-      cartState.set(productName, { name: product.name, category: product.category, qty: 1 });
+      cartState.set(product.id, { id: product.id, name: product.name, category: product.category, qty: 1 });
     }
     renderCart();
   };
@@ -337,16 +337,17 @@ function initSearch() {
   });
 
   grid.addEventListener("click", (e) => {
-    const addBtn = e.target.closest("button[data-add-product]");
+    const addBtn = e.target.closest("button[data-add-product-id]");
     if (addBtn && isCatalogPage) {
-      addToCart(addBtn.getAttribute("data-add-product"));
+      addToCart(addBtn.getAttribute("data-add-product-id"));
       return;
     }
 
-    const btn = e.target.closest("button[data-product]");
+    const btn = e.target.closest("button[data-product-id]");
     if (!btn) return;
 
-    const productName = btn.getAttribute("data-product");
+    const productId = btn.getAttribute("data-product-id") || "";
+    const productName = productById.get(productId)?.name || "este producto";
     const msg = `Hola, quiero información del producto "${productName}" (Kairos Lab). ¿Precio y disponibilidad?`;
     window.open(buildWhatsAppLink(msg), "_blank", "noopener");
   });

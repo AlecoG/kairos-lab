@@ -39,6 +39,13 @@ Nota: también hay un botón con link directo a Google Maps en esa misma secció
   - Contraseña: `kairos123`
 - El panel guarda cambios en `localStorage` del navegador.
 - El catálogo público usa esos cambios para mostrar solo productos visibles y habilitados.
+- Funciones del panel:
+  - Crear y eliminar productos.
+  - Editar nombre, descripción, categoría, precio, visibilidad, habilitación y stock.
+  - Subir imagen con preview (se guarda como DataURL en `localStorage`).
+  - Filtros por estado y buscador de productos.
+  - Exportar e importar JSON de productos.
+  - Historial básico de cambios con fecha y usuario.
 
 ## Migración gradual a Tailwind CSS
 - Tailwind ya está configurado con:
