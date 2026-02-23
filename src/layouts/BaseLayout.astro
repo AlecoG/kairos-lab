@@ -18,6 +18,7 @@ const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
     <title>{title}</title>
     <meta name="description" content={description} />
     <slot name="head" />
+    <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
     <link rel="stylesheet" href={`${base}styles.css`} />
   </head>
   <body data-page={page} data-base={base}>
