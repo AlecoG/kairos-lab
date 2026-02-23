@@ -72,14 +72,14 @@ function renderServices() {
   if (!grid) return;
 
   grid.innerHTML = services.map((s) => `
-    <article class="item">
-      <div class="item__top">
-        <h3 class="item__title">${s.name}</h3>
-        <span class="item__pill">${s.minutes} min</span>
+    <article class="grid min-h-[160px] gap-2.5 rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,.05)] transition-all duration-200 hover:scale-[1.01] hover:border-[#d6d6d6] hover:shadow-[0_14px_28px_rgba(0,0,0,.1)]">
+      <div class="flex items-start justify-between gap-4">
+        <h3 class="m-0 text-[1.1rem]">${s.name}</h3>
+        <span class="whitespace-nowrap rounded-full border border-[#e8e8e8] bg-[rgba(0,0,0,.02)] px-2.5 py-1 text-[.85rem] font-extrabold text-[#6b6b6b]">${s.minutes} min</span>
       </div>
-      <p class="item__desc">${s.desc}</p>
-      <div class="item__actions">
-        <span class="price">${s.price}</span>
+      <p class="m-0 leading-relaxed text-[#6b6b6b]">${s.desc}</p>
+      <div class="flex flex-wrap items-center gap-2.5 pt-1">
+        <span class="font-black">${s.price}</span>
         <button class="btn btn--ghost" data-service="${s.name}">Agendar este servicio</button>
       </div>
     </article>
@@ -102,10 +102,10 @@ function renderProducts(list) {
   grid.innerHTML = list.map((p) => {
     const optimized = getOptimizedSources(p.image || "");
     return `
-    <article class="item">
-      <div class="item__media">
+    <article class="grid min-h-[160px] gap-2.5 rounded-2xl border border-[#e8e8e8] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,.05)] transition-all duration-200 hover:scale-[1.01] hover:border-[#d6d6d6] hover:shadow-[0_14px_28px_rgba(0,0,0,.1)] max-[640px]:[flex:0_0_84%]">
+      <div class="overflow-hidden rounded-xl border border-[#e8e8e8] bg-gradient-to-b from-[#fafafa] to-[#efefef] p-1">
         <img
-          class="item__image"
+          class="block h-[310px] w-full origin-center object-contain transition-transform duration-300 ease-out hover:scale-105"
           src="${optimized.src || getCategoryFallback(p.category)}"
           srcset="${optimized.srcset}"
           sizes="(max-width: 640px) 84vw, (max-width: 920px) 48vw, 32vw"
@@ -118,14 +118,14 @@ function renderProducts(list) {
           decoding="async"
         />
       </div>
-      <div class="item__body">
-        <div class="item__top">
-          <h3 class="item__title">${p.name}</h3>
-          <span class="item__pill">${p.category}</span>
+      <div class="grid gap-2.5">
+        <div class="flex items-start justify-between gap-4">
+          <h3 class="m-0 text-[1.1rem]">${p.name}</h3>
+          <span class="whitespace-nowrap rounded-full border border-[#e8e8e8] bg-[rgba(0,0,0,.02)] px-2.5 py-1 text-[.85rem] font-extrabold text-[#6b6b6b]">${p.category}</span>
         </div>
-        <p class="item__desc">${p.desc}</p>
-        <div class="item__actions">
-          <span class="price">${p.price}</span>
+        <p class="m-0 leading-relaxed text-[#6b6b6b]">${p.desc}</p>
+        <div class="flex flex-wrap items-center gap-2.5 pt-1">
+          <span class="font-black">${p.price}</span>
           ${isCatalogPage ? `<button class="btn btn--primary" data-add-product="${p.name}">Agregar al carrito</button>` : ""}
           <button class="btn btn--ghost" data-product="${p.name}">Preguntar por este producto</button>
         </div>
