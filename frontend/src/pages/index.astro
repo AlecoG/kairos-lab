@@ -1,0 +1,274 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import {
+  badgeClass,
+  brandLogoClass,
+  btnGhostClass,
+  btnPrimaryClass,
+  containerClass,
+  fieldLabelClass,
+  navLinkClass,
+  navMenuClass,
+  navToggleClass,
+} from "../lib/ui";
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+const quickFieldClass = "w-full h-[42px] rounded-[10px] border border-[#e7eaf0] bg-white px-3.5 text-[14px] text-[#161616] shadow-none outline-none placeholder:text-[#949cab] focus:border-[#e7eaf0] focus:ring-0";
+const quickTextareaClass = "w-full min-h-[104px] rounded-[10px] border border-[#e7eaf0] bg-white px-3.5 py-3 text-[14px] text-[#161616] shadow-none outline-none placeholder:text-[#949cab] focus:border-[#e7eaf0] focus:ring-0 resize-y";
+const quickLabelClass = "text-[0.64rem] font-extrabold uppercase tracking-[0.16em] text-[#8a919d]";
+---
+
+<BaseLayout
+  title="Kairos Lab | Barbería"
+  description="Kairos Lab Barbería: cortes, barba, cejas, lavado y tratamientos capilares. Agenda tu cita por WhatsApp."
+  page="home"
+>
+  <Fragment slot="head">
+    <link
+      rel="preload"
+      as="image"
+      href={`${base}assets/branding/logo-308.webp`}
+      imagesrcset={`${base}assets/branding/logo-154.webp 154w, ${base}assets/branding/logo-308.webp 308w`}
+      imagesizes="(max-width: 640px) 170px, 220px"
+      fetchpriority="high"
+    />
+  </Fragment>
+
+  <header class="sticky top-0 z-20 border-b border-[#e8e8e8] bg-white/85 backdrop-blur-[10px]" id="top">
+    <div class={`${containerClass} flex items-center justify-between gap-4 py-3.5`}>
+      <a class="flex shrink-0 items-center no-underline" href="#top" aria-label="Ir al inicio">
+        <picture class="block">
+          <source
+            type="image/webp"
+            srcset={`${base}assets/branding/logo-154.webp 154w, ${base}assets/branding/logo-308.webp 308w`}
+            sizes="(max-width: 640px) 170px, 220px"
+          />
+          <img
+            class={brandLogoClass}
+            src={`${base}assets/branding/logo.jpg`}
+            alt="Kairos Lab"
+            width="306"
+            height="146"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+      </a>
+
+      <nav class="relative" aria-label="Navegación principal">
+        <button
+          class={navToggleClass}
+          id="navToggle"
+          aria-expanded="false"
+          aria-controls="navMenu"
+        >
+          <span class="sr-only">Abrir menú</span>
+          ☰
+        </button>
+
+        <div
+          class={navMenuClass}
+          id="navMenu"
+          aria-hidden="true"
+        >
+          <a class={navLinkClass} href="#servicios">Servicios</a>
+          <a class={navLinkClass} href="#productos">Productos</a>
+          <a class={navLinkClass} href="#ubicacion">Ubicación</a>
+          <a class={navLinkClass} href="#contacto">Contacto</a>
+          <a class={btnPrimaryClass} id="btnCitaTop" href="#" target="_blank" rel="noopener">Agendar cita</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section
+      class="border-b border-[#e8e8e8] py-10 md:py-14"
+      style="background: radial-gradient(800px 400px at 10% 10%, rgba(0,0,0,.06), transparent 60%), radial-gradient(800px 400px at 90% 30%, rgba(0,0,0,.04), transparent 60%);"
+    >
+      <div class={`${containerClass} grid items-start gap-8 lg:grid-cols-[1.1fr_.9fr]`}>
+        <div>
+          <p class={badgeClass}>Barbería · Estilo · Cuidado capilar</p>
+          <h1 class="mb-2 mt-3 text-[clamp(2.2rem,4vw,3.2rem)]">Kairos Lab</h1>
+          <p class="mb-5 text-[1.05rem] leading-relaxed text-[#6b6b6b]">
+            Una experiencia limpia y precisa: corte, barba, cejas, lavado y tratamientos capilares.
+            Agenda tu cita en segundos por WhatsApp.
+          </p>
+
+          <div class="mb-6 flex flex-wrap gap-3.5">
+            <a class={btnPrimaryClass} id="btnCitaHero" href="#" target="_blank" rel="noopener">
+              Agendar cita por WhatsApp
+            </a>
+            <a class={btnGhostClass} href="#servicios">Ver servicios</a>
+          </div>
+
+          <div class="grid grid-cols-1 gap-3.5 border-t border-[#e8e8e8] pt-5 sm:grid-cols-2">
+            <div class="rounded-2xl border border-[#e8e8e8] bg-white/80 px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.04)]">
+              <span class="block text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-[#8a8a8a]">Horario</span>
+              <span class="mt-2 block text-[1.02rem] font-black tracking-[-0.01em] text-[#111111]">Lun–Dom · 10:00–22:00</span>
+            </div>
+            <div class="rounded-2xl border border-[#e8e8e8] bg-white/80 px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.04)]">
+              <span class="block text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-[#8a8a8a]">Atención</span>
+              <span class="mt-2 block text-[1.02rem] font-black tracking-[-0.01em] text-[#111111]">Con cita previa · Walk-ins según disponibilidad</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="rounded-2xl border border-[#e5e7eb] bg-white p-6 shadow-none">
+            <h2 class="mb-1">Reserva rápida</h2>
+            <p class="mb-4 text-[#6b6b6b]">Cuéntanos qué necesitas y te confirmamos el horario.</p>
+
+            <form class="grid gap-3.5" id="quickForm">
+              <label class="grid gap-1.5">
+                <span class={quickLabelClass}>Servicio</span>
+                <select class={`${quickFieldClass} pr-9`} id="serviceSelect" required>
+                  <option value="Corte de cabello">Corte de cabello</option>
+                  <option value="Barba">Barba</option>
+                  <option value="Cejas">Cejas</option>
+                  <option value="Lavado de cabeza">Lavado de cabeza</option>
+                  <option value="Tratamientos capilares">Tratamientos capilares</option>
+                </select>
+              </label>
+
+              <label class="grid gap-1.5">
+                <span class={quickLabelClass}>Nombre</span>
+                <input class={quickFieldClass} id="nameInput" type="text" placeholder="Tu nombre" />
+              </label>
+
+              <label class="grid gap-1.5">
+                <span class={quickLabelClass}>Nota</span>
+                <textarea class={quickTextareaClass} id="noteInput" placeholder="Ej. degradado medio, barba perfilada…"></textarea>
+              </label>
+
+              <button class={`${btnPrimaryClass} w-full`} type="submit">
+                Enviar a WhatsApp
+              </button>
+
+              <p class="m-0 text-sm text-[#6b6b6b]">
+                Al enviar, se abrirá WhatsApp con un mensaje listo para enviar.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12" id="servicios">
+      <div class={containerClass}>
+        <SectionHeader title="Servicios" description="Selecciona lo que necesitas. Todo con enfoque limpio, profesional y detallista." />
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="border-y border-[#e8e8e8] bg-[#f6f6f6] py-12" id="productos">
+      <div class={containerClass}>
+        <SectionHeader title="Catálogo de productos" description="Productos recomendados para mantener el look en casa." />
+
+        <div class="mb-4 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <label class="block">
+              <span class="sr-only">Buscar</span>
+              <input
+                class="w-full min-h-[42px] rounded-lg border border-[#d6d6d6] bg-white px-3.5 py-2.5 text-[0.84rem] text-[#111111] shadow-[0_1px_2px_rgba(0,0,0,0.02)] outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-[#a0a0a0] hover:border-[#c8c8c8] focus:border-[#bdbdbd] focus:bg-white focus:ring-4 focus:ring-black/4 sm:w-[min(420px,70vw)]"
+                id="productSearch"
+                type="search"
+                placeholder="Buscar: cera, shampoo, aceite…"
+              />
+            </label>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button class="inline-flex h-[34px] items-center justify-center rounded-[8px] border border-transparent bg-[#f1f2f5] px-4 text-[12.5px] font-semibold text-[#161616] shadow-none outline-none transition-colors duration-150 hover:bg-[#ebedf1] focus-visible:ring-0" id="clearFilters">Limpiar</button>
+            <a class={btnPrimaryClass} href={`${base}catalogo/`}>Ver todos los productos</a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-[640px]:flex max-[640px]:snap-x max-[640px]:gap-4 max-[640px]:overflow-x-auto max-[640px]:pb-1.5 max-[640px]:[scroll-padding-inline:.1rem]" id="productsGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-12" id="ubicacion">
+      <div class={containerClass}>
+        <SectionHeader title="Ubicación" description="Estamos en Vedado, La Habana. Puedes abrir la ruta o ver el mapa aquí mismo." />
+
+        <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-[.9fr_1.1fr]">
+          <div class="rounded-2xl border border-[#e8e8e8] bg-white p-4">
+            <h3>Dirección</h3>
+            <p class="text-[#6b6b6b]">
+              Calle 21 / 8 y 10<br />
+              Vedado, Havana, Cuba
+            </p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a class={btnGhostClass} href="https://maps.google.com/?q=Calle+21+%2F+8+y+10%2C+Vedado%2C+Havana%2C+Cuba" target="_blank" rel="noopener">Abrir en Google Maps</a>
+              <a class={btnPrimaryClass} id="btnCitaUbicacion" href="#" target="_blank" rel="noopener">Agendar cita</a>
+            </div>
+          </div>
+
+          <div class="min-h-[240px] overflow-hidden rounded-2xl border border-[#e8e8e8] bg-white">
+            <iframe
+              class="block h-full min-h-[240px] w-full border-0"
+              title="Mapa de Kairos Lab"
+              data-src="https://maps.google.com/maps?q=Calle%2021%20%2F%208%20y%2010%2C%20Vedado%2C%20Havana%2C%20Cuba&z=16&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+            <noscript>
+              <iframe
+                class="block h-full min-h-[240px] w-full border-0"
+                title="Mapa de Kairos Lab"
+                src="https://maps.google.com/maps?q=Calle%2021%20%2F%208%20y%2010%2C%20Vedado%2C%20Havana%2C%20Cuba&z=16&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
+            </noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-[#e8e8e8] bg-[#f6f6f6] py-12" id="contacto">
+      <div class={`${containerClass} grid gap-5 md:grid-cols-1 lg:grid-cols-[1.2fr_.9fr_.9fr]`}>
+        <div>
+          <h2>Kairos Lab</h2>
+          <p class="text-[#6b6b6b]">
+            Barbería con estética minimalista: blanco y gris, enfoque premium y sin complicaciones.
+          </p>
+          <div class="mt-3 flex gap-3.5">
+            <a class="font-extrabold text-[#6b6b6b] no-underline hover:text-[#111111]" href="#" aria-label="Instagram (actualiza el link)">Instagram</a>
+            <a class="font-extrabold text-[#6b6b6b] no-underline hover:text-[#111111]" href="#" aria-label="TikTok (actualiza el link)">TikTok</a>
+          </div>
+        </div>
+
+        <div>
+          <h3>Contacto</h3>
+          <ul class="m-0 grid list-none gap-2 p-0">
+            <li><span class="text-[#6b6b6b]">WhatsApp:</span> <a id="waLinkFooter" href="#" target="_blank" rel="noopener">Enviar mensaje</a></li>
+            <li><span class="text-[#6b6b6b]">Tel:</span> <a href="tel:+53 00000000">+53 0000 0000</a></li>
+            <li><span class="text-[#6b6b6b]">Email:</span> <a href="mailto:contacto@kairoslab.com">contacto@kairoslab.com</a></li>
+            <li><span class="text-[#6b6b6b]">Dirección:</span> Calle 21 / 8 y 10, Vedado, Havana, Cuba</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Horarios</h3>
+          <ul class="m-0 grid list-none gap-2 p-0">
+            <li><span class="text-[#6b6b6b]">Lunes a domingo:</span> 10:00–22:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class={`${containerClass} flex items-center justify-between gap-4 border-t border-[#e8e8e8] py-4 pb-9 max-[640px]:flex-col max-[640px]:items-start`}>
+        <p class="text-[#6b6b6b]">© <span id="year"></span> Kairos Lab. Todos los derechos reservados.</p>
+        <a class="text-[#6b6b6b]" href="#top">Volver arriba ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <a class="fixed bottom-4 right-4 z-30 rounded-full bg-[#111] px-4 py-3.5 font-black text-white no-underline shadow-[0_10px_30px_rgba(0,0,0,.08)] transition-all duration-200" id="floatCta" href="#" target="_blank" rel="noopener" aria-label="Agendar por WhatsApp">
+    WhatsApp · Agendar
+  </a>
+</BaseLayout>
