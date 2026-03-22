@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: kairos-backend
+    environment:
+      APP_ENV: production
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      DATABASE_URL: sqlite:////app/data/kairos.db
+      JWT_SECRET_KEY: change-me-in-production
+      CORS_ALLOW_ORIGINS: http://localhost:4321,http://127.0.0.1:4321
+    volumes:
+      - backend_data:/app/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        PUBLIC_API_BASE: http://localhost:8000
+    container_name: kairos-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4321:80"
+    restart: unless-stopped
+
+volumes:
+  backend_data:

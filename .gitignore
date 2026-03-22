@@ -1,3 +1,8 @@
 node_modules
 .astro
 dist
+
+# SQLite local databases
+kairos.db
+backend/kairos.db
+*.db

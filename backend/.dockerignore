@@ -1,0 +1,11 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+kairos.db
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
